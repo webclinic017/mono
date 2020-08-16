@@ -1,0 +1,25 @@
+version: '3'
+services:
+    dummy:
+        build:
+            context: ./server
+            dockerfile: ./Dockerfile
+            args:
+                project: ./cmd/dummy
+        environment:
+            - PORT=3001
+        ports:
+            - 8001:3001
+        restart: on-failure
+        volumes:
+            - dummy_vol:/go/src/mono/server
+        networks:
+            - mono_net
+
+volumes:
+    dummy_vol:
+
+networks:
+    mono_net:
+        driver: bridge
+
