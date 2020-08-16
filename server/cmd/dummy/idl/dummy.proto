@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package dummy_gen;
+
+option go_package="github.com/veganafro/mono/dummy_gen";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+service DummyService {
+    rpc GetEmpty(google.protobuf.Empty) returns (DummyResponse) {
+        option(google.api.http) = { get: "/hello" };
+    }
+    rpc GetDummy(DummyRequest) returns (DummyResponse) {}
+}
+
+message DummyRequest {
+    string msg = 1;
+}
+
+message DummyResponse {
+    string rsp = 1;
+}
+
