@@ -22,11 +22,11 @@ server
 
 * cmd
 
-⋅⋅⋅ `cmd` contains service entry points in the `main.go` file and service definitions as represented by `.proto` files. Each directory in `cmd` maps to a similarly named service.
+   `cmd` contains service entry points in the `main.go` file and service definitions as represented by `.proto` files. Each directory in `cmd` maps to a similarly named service.
 
 * pkg
 
-⋅⋅⋅ `pkg` contains shared code and libraries. Typically, this will mean the generated gRPC service and protocol buffer messages.
+   `pkg` contains shared code and libraries. Typically, this will mean the generated gRPC service and protocol buffer messages.
 
 ## Getting started
 
@@ -40,7 +40,8 @@ $ GO111MODULE=on go get github.com/golang/protobuf/protoc-gen-go
 ```
 
 * [`docker`](https://docs.docker.com/docker-for-mac/install/) - This is a containerization tool that services will run in
-⋅⋅⋅ Install `docker` manually by following the steps linked above
+
+   Install `docker` manually by following the steps linked above
 
 * [`googleapis`](https://github.com/googleapis/googleapis) - This repo provides some helpful tools and `.proto` files for transcoding HTTP/JSON to gRPC
 
