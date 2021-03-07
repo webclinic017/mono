@@ -5,18 +5,18 @@ load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_test")
 android_binary(
     name = "app_binary",
     custom_package = "com.veganafro.app",
-    manifest = "main/AndroidManifest.xml",
+    manifest = "src/main/AndroidManifest.xml",
     deps = [
-        "//app/src:app_lib",
+        "//app:app_lib",
     ],
 )
 
 kt_android_library(
     name = "app_lib",
     custom_package = "com.veganafro.app",
-    manifest = "main/AndroidManifest.xml",
-    resource_files = glob(["main/res/**"]),
-    srcs = glob(["main/java/com/veganafro/app/*.kt"]),
+    manifest = "src/main/AndroidManifest.xml",
+    resource_files = glob(["src/main/res/**"]),
+    srcs = glob(["src/main/java/com/veganafro/app/*.kt"]),
     visibility = ["//:__pkg__"],
     deps = [
         "@maven//:androidx_appcompat_appcompat",
@@ -25,12 +25,13 @@ kt_android_library(
         "@maven//:androidx_fragment_fragment",
         "@maven//:androidx_lifecycle_lifecycle_common",
         "@maven//:androidx_lifecycle_lifecycle_viewmodel",
+        "@maven//:org_jetbrains_kotlin_kotlin_stdlib_jdk7",
     ],
 )
 
 kt_jvm_test(
     name = "app_unit_test",
-    srcs = glob(["test/java/com/veganafro/app/*.kt"]),
+    srcs = glob(["src/test/java/com/veganafro/app/*.kt"]),
     test_class = "com.veganafro.app.ExampleUnitTest",
     deps = [
         "@maven//:junit_junit",
@@ -39,8 +40,9 @@ kt_jvm_test(
 
 android_local_test(
     name = "app_android_test",
+    custom_package = "com.veganafro.app",
     # A manifest file is needed here because `androidx_test_monitor` package sets a `minSdkVersion`
-    manifest = "androidTest/AndroidManifest.xml",
+    manifest = "src/androidTest/AndroidManifest.xml",
     test_class = "com.veganafro.app.ExampleInstrumentedTest",
     deps = [
         # Bazel doesn't currently support kt_android_local_test
