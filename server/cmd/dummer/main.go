@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/golang/protobuf/ptypes/empty"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	pb "github.com/veganafro/mono/server/pkg/dummer/v1"
 	dummy "github.com/veganafro/mono/server/pkg/dummy/v1"
 
@@ -30,7 +30,7 @@ type dummerServer struct {
 func (server *dummerServer) GetWorld(ctx context.Context, request *dummy.GetHelloRequest) (*dummy.GetHelloResponse, error) {
 	var DummyHost string
 	if DummyHost = os.Getenv("DUMMY_HOST"); DummyHost == "" {
-		DummyHost = "0.0.0.0:3001"
+		DummyHost = "0.0.0.0:8000"
 	}
 
 	conn, error := grpc.Dial(DummyHost, grpc.WithInsecure())
