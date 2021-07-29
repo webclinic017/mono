@@ -58,22 +58,18 @@ structure outlined above.
 
 ### Setting up the dev environment
 
-Start by installing [`brew`](https://brew.sh/)
-
-Next, run the following commands that install the Bazel build tool and Java 8:
+Assuming you've installed `brew` and `bazel`, run the following commands that install Java 8:
 
 ```
-$ brew install bazel
 $ brew tap adoptopenjdk/openjdk
 $ brew install --cask adoptopenjdk8
 $ brew tap homebrew/core
 ```
 
-Once those prerequisites have been installed, add the following lines to `.bash_profile`:
+Once those prerequisites have been installed, add the following line to `.bash_profile`:
 
 ```
 export JAVA_HOME=$(/usr/libexec/java_home -v1.8)
-source $(brew --prefix)/etc/bash_completion.d
 ```
 
 Create a directory `~/android-sdk` and add the following lines to `.bash_profile`:
@@ -129,7 +125,7 @@ $ bazel mobile-install //app:app_binary --start_app
 Incremental builds can be sped up by executing the second command with a replaced target (the target that has been modified)
 and an additional `--incremental` flag.
 
-## Testing
+### Testing
 
 Each module should be well tested, and tests can be executed with this `bazel` command:
 
@@ -138,3 +134,4 @@ $ bazel test //some/target:name
 ```
 
 Each tested class corresponds to a `kt_jvm_test` (for unit tests) or an `android_local_test` (for integration tests).
+

@@ -5,7 +5,7 @@ Resources related to backend services that support the Mono iOS and Android clie
 ## Structure
 
 ```
-server
+golang
 ├── cmd
 │   └── dummy
 │       ├── BUILD.bazel
@@ -14,59 +14,50 @@ server
 │   └── dummy
 │       └── v1
 │           ├── BUILD.bazel
-│           └── dummy.proto
-├── Dockerfile
-├── Dockerfile.test
+│           └── dummy.go
 ├── BUILD
-├── WORKSPACE
-├── tools.go
+├── repositories.bzl
 ├── go.mod
 └── go.sum
 ```
 
-* cmd
+`cmd` contains service entry points in the `main.go`. Each directory in `cmd` maps to a similarly named service.
 
-   `cmd` contains service entry points in the `main.go`. Each directory in `cmd` maps to a similarly named service.
-
-* pkg
-
-   `pkg` contains shared code, libraries, and service definitions. In keeping with the [`buf`](https://buf.build/docs/style-guide/#files-and-packages) styleguide,
-   protobuf messages and services are in versioned packages.
+`pkg` contains shared code and libraries - including Go implementations of gRPC services.
 
 ## Getting started
 
-With the introduction of the [Bazel](https://bazel.build/) system, getting up and running is fairly simple. The first of two requirements is that `bazel` be installed like so:
-
-```
-$ brew install bazel
-```
-Next, install [`docker`](https://docs.docker.com/docker-for-mac/install/) manually by following the linked steps.
-
-### Existing services
+### Running existing services
 
 An existing service can be brought up individually using the
+
 ```
 $ bazel run //cmd/[SERVICE]:[SERVICE]
 ```
-command. To bring up all existing services in containers, just run
-```
-$ make coldstart
-```
+command.
 
-### New services
+### Creating new services
 
-Start by creating a versioned service definition in a package named after the service (i.e. `[SERVICE]/v1/[SERVICE].proto`). Be sure to follow
-the [`buf`](https://buf.build/docs/style-guide/#services) styleguide when declaring RPCs and messages. This versioned package should be under `pkg`.
+Start by creating a versioned service definition in the [`proto`](../proto) module.
 
-Then, create a `BUILD.bazel` that has instructions for how to build the service. The `BUILD.bazel` for the `dummer` service is a good example of a service with both external and local
-dependencies. The `dummy` service contains an example for a service with no local dependencies.
+Once that's done, create a similarly versioned Go implementation of the service under [`pkg`](./pkg) (i.e. `pkg/[SERVICE]/[VERSION]).
+This new module should contain a `BUILD.bazel` file and a Go file named after the service whose package is `main`.
 
-Finally, create a new service entrypoint and `BUILD.bazel` file in a package named after the service under `cmd` (i.e. `cmd/[SERVICE]/main.go`). Once service endpoints
-are implemented, use
+The `BUILD.bazel` file for the `dummer` service is a good example of a service with both external and local proto dependencies. The
+`dummy` service contains an example for a service with no local and some external proto dependencies.
+
+Finally, create a new service entrypoint and `BUILD.bazel` file in a package named after the service under `cmd` (i.e. `cmd/[SERVICE]/main.go`).
+Once service endpoints are implemented, use
+
 ```
 $ bazel run //cmd/[SERVICE]:SERVICE
 ```
-to bring up the service locally. Also, be sure to add the service configuration to the `docker-compose.yml` file so that the new service can be brought up in a container.
+to bring up the service locally. Also, sure to containerize the service - check out the `dummy` or `dummer` service entrypoints'
+`BUILD.bazel` files for examples.
+
+### Automated testing
+
+Coming soon...
 
 ## [Deprecated] Getting started
 
@@ -99,8 +90,6 @@ the service stubs. These can be found in `pkg/[NAME]_gen`. The final step is to 
 
 ## Helpful notes
 
-[Bazel protobuf docs](https://github.com/bazelbuild/rules_proto)
-
 [Bazel gazelle docs](https://github.com/bazelbuild/bazel-gazelle/blob/master/repository.rst)
 
 [Bazel go docs](https://github.com/bazelbuild/rules_go)
@@ -108,6 +97,3 @@ the service stubs. These can be found in `pkg/[NAME]_gen`. The final step is to 
 [Bazel go + protobuf docs](https://github.com/bazelbuild/rules_go/blob/master/proto/core.rst)
 
 [gRPC gateway docs](https://github.com/grpc-ecosystem/grpc-gateway)
-
-[Buf docs](https://buf.build/docs/introduction)
-
