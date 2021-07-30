@@ -1,13 +1,11 @@
 """
-`go_grpc_deps` loads all the relevant Go dependencies for gRPC
-
-`go_grpc_gateway_deps` loads all the relevant Go dependencies for grpc-gateway
+`go_deps` loads all the relevant Go dependencies for gRPC and grpc-gateway
 """
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
-def go_grpc_deps():
+def go_deps():
     """
-    `go_grpc_deps` loads all the relevant Go dependencies for gRPC
+    `go_deps` loads all the relevant Go dependencies for gRPC and grpc-gateway
     """
     ## Begin gRPC dependecies - 05/13 ##
 
@@ -44,10 +42,6 @@ def go_grpc_deps():
 
     ## End gRPC dependencies ##
 
-def go_grpc_gateway_deps():
-    """
-    `go_grpc_gateway_deps` loads all the relevant Go dependencies for grpc-gateway
-    """
     ## Begin grpc-gateway dependencies - 05/13 ##
 
     GLOG_COMMIT = "424d2337a5299a465c8a8228fc3ba4b1c28337a2"

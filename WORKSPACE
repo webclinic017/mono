@@ -112,10 +112,9 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
 gazelle_dependencies()
 
-load("//golang:repositories.bzl", "go_grpc_deps", "go_grpc_gateway_deps")
+load("//golang:repositories.bzl", "go_deps")
 
-go_grpc_deps()
-go_grpc_gateway_deps()
+go_deps()
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 

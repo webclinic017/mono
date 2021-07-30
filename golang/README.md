@@ -41,7 +41,8 @@ command.
 Start by creating a versioned service definition in the [`proto`](../proto) module.
 
 Once that's done, create a similarly versioned Go implementation of the service under [`pkg`](./pkg) (i.e. `pkg/[SERVICE]/[VERSION]).
-This new module should contain a `BUILD.bazel` file and a Go file named after the service whose package is `main`.
+This new module should contain a `BUILD.bazel` file and a Go file named after the service whose package is eponymous
+to the service.
 
 The `BUILD.bazel` file for the `dummer` service is a good example of a service with both external and local proto dependencies. The
 `dummy` service contains an example for a service with no local and some external proto dependencies.

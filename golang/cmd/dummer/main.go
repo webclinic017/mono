@@ -10,8 +10,8 @@ import (
 
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	pb "github.com/veganafro/mono/server/pkg/dummer/v1"
-	dummy "github.com/veganafro/mono/server/pkg/dummy/v1"
+	pb "github.com/veganafro/mono/golang/pkg/dummer/v1"
+	dummy "github.com/veganafro/mono/golang/pkg/dummy/v1"
 
 	"google.golang.org/grpc"
 
