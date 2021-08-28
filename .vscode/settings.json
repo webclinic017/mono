@@ -1,0 +1,17 @@
+{
+    "files.exclude": {
+        "android": true,
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/*.code-search": true,
+        "android": true,
+    },
+    "go.goroot": "${workspaceFolder}/bazel-${workspaceFolderBasename}/external/go_sdk",
+    "go.toolsEnvVars": {
+      "GOPACKAGESDRIVER_BAZEL_QUERY": "kind(go_binary, //...)",
+      "GOPACKAGESDRIVER": "${workspaceFolder}/golang/tools/gopackagesdriver.sh"
+    },
+    "go.useLanguageServer": true,
+}

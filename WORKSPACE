@@ -8,6 +8,39 @@ workspace(
 )
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
+## Begin df ##
+
+DF_COMMIT = "42bedcba494c8d46b9fbc6aaf40c0202d217f29e"
+DF_SHALLOW_SINCE = "1619103159 +0100"
+
+git_repository(
+    name = "df",
+    commit = DF_COMMIT,
+    remote = "https://github.com/dataform-co/dataform.git",
+    shallow_since = DF_SHALLOW_SINCE,
+)
+
+load("@df//tools/helm:repository_rules.bzl", "helm_tool", "helm_chart")
+
+HEML_TOOL_VERSION = "v3.6.2"
+
+helm_tool(
+    name = "helm_tool",
+    version = HEML_TOOL_VERSION,
+)
+
+CONSUL_CHART_VERSION = "0.33.0"
+
+helm_chart(
+    name = "hashicorp",
+    chartname = "consul",
+    repo_url = "https://helm.releases.hashicorp.com",
+    version = CONSUL_CHART_VERSION,
+)
+
+## End df ##
 
 # SEE: https://github.com/bazelbuild/rules_python/issues/437
 ## Begin rules_python - 05/13 ##
@@ -173,6 +206,32 @@ container_pull(
 )
 
 ## End rules_docker ##
+
+## Begin rules_k8s - 07/01 ##
+
+RULES_K8S_SHA = "773aa45f2421a66c8aa651b8cecb8ea51db91799a405bd7b913d77052ac7261a"
+RULES_K8S_VERSION = "v0.5"
+
+http_archive(
+    name = "io_bazel_rules_k8s",
+    strip_prefix = "rules_k8s-0.5",
+    urls = [
+        "https://github.com/bazelbuild/rules_k8s/archive/{}.tar.gz".format(
+            RULES_K8S_VERSION
+        )
+    ],
+    sha256 = RULES_K8S_SHA,
+)
+
+load("@io_bazel_rules_k8s//k8s:k8s.bzl", "k8s_repositories")
+
+k8s_repositories()
+
+load("@io_bazel_rules_k8s//k8s:k8s_go_deps.bzl", k8s_go_deps = "deps")
+
+k8s_go_deps()
+
+## End rules_k8s 07/01 ##
 
 ## Begin rules_pkg ##
 

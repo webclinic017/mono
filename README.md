@@ -13,7 +13,7 @@ With the introduction of the [Bazel](https://bazel.build/) system, getting up an
 is that `bazel` be installed like so:
 
 ```
-$ brew install bazel
+$ brew install bazel@4.2.0
 ```
 Be sure to add the following line to `.bash_profile`:
 
@@ -26,7 +26,7 @@ The third step is to install [`pyenv`](https://github.com/pyenv/pyenv) so that w
 is needed so that we can `pip install futures`, which is meant to fix [this](https://github.com/bazelbuild/bazel/issues/12741) error. 
 
 ```
-$ brew install pyenv
+$ brew install pyenv@1.2.21
 ```
 Now add the following line to `.bash_profile`:
 

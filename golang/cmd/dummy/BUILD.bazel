@@ -1,6 +1,8 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image", "container_push")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
+load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
 
 go_library(
     name = "dummy_lib",
@@ -50,6 +52,36 @@ container_image(
         "//golang:repositories_tar",
         "//golang/pkg/dummy/v1:pkg_dummy_v1_tar",
         "//proto/dummy/v1:dummy_v1_tar",
+    ],
+)
+
+k8s_object(
+    name = "dummy_deployment",
+    cluster = "minikube",
+    kind = "deployment",
+    template = ":dummy-deployment.yaml",
+)
+
+k8s_object(
+    name = "dummy_service",
+    cluster = "minikube",
+    kind = "service",
+    template = ":dummy-service.yaml",
+)
+
+k8s_object(
+    name = "dummy_namespace",
+    cluster = "minikube",
+    kind = "namespace",
+    template = ":dummy-namespace.yaml",
+)
+
+k8s_objects(
+    name = "dummy_objects",
+    objects = [
+        ":dummy_namespace",
+        ":dummy_deployment",
+        ":dummy_service",
     ],
 )
 
