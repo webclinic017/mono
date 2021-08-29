@@ -100,17 +100,17 @@ rules_proto_toolchains()
 
 ## Begin io_bazel_rules_go - 05/13 ##
 
-RULES_GO_SHA = "7904dbecbaffd068651916dce77ff3437679f9d20e1a7956bff43826e7645fcc"
-RULES_GO_VERSION = "0.25.1"
+RULES_GO_SHA = "8e968b5fcea1d2d64071872b12737bbb5514524ee5f0a4f54f5920266c261acb"
+RULES_GO_VERSION = "0.28.0"
 
 http_archive(
     name = "io_bazel_rules_go",
     sha256 = RULES_GO_SHA,
     urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v{}/rules_go-v{}.tar.gz".format(
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v{}/rules_go-v{}.zip".format(
             RULES_GO_VERSION, RULES_GO_VERSION
         ),
-        "https://github.com/bazelbuild/rules_go/releases/download/v{}/rules_go-v{}.tar.gz".format(
+        "https://github.com/bazelbuild/rules_go/releases/download/v{}/rules_go-v{}.zip".format(
             RULES_GO_VERSION, RULES_GO_VERSION
         ),
     ],
@@ -139,7 +139,7 @@ http_archive(
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
-go_register_toolchains(version = "1.15.5")
+go_register_toolchains(version = "1.16")
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
