@@ -37,7 +37,7 @@ pkg_tar(
 
 container_image(
     name = "dummer_image",
-    base = "@bazel_3_5_0//image",
+    base = "@bazel_4_2_0//image",
     entrypoint = ["bazel", "run", "//golang/cmd/dummer:dummer"],
     env = {
         "PORT": "8001",

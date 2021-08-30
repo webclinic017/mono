@@ -10,14 +10,3 @@ pkg_tar(
     strip_prefix = "/",
     visibility = ["//visibility:public"],
 )
-
-pkg_tar(
-    name = "workspace_tar",
-    mode = "0755",
-    package_dir = "/",
-    srcs = [
-        "WORKSPACE",
-    ],
-    strip_prefix = "/",
-    visibility = ["//visibility:public"],
-)

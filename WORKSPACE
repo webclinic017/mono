@@ -198,11 +198,11 @@ container_deps()
 load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
 
 container_pull(
-    name = "bazel_3_5_0",
+    name = "bazel_4_2_0",
     # 'tag' is also supported, but digest is encouraged for reproducibility.
-    digest = "sha256:ace9881e6e9c5d48b5fd637321361aeffe54000265894a65f7d818dc1065bd80",
-    registry = "l.gcr.io",
-    repository = "google/bazel",
+    digest = "sha256:c30c0bad867cb2f99ca6b27808e9b6a6148b64dc84c5daca3d24c0d8d6fc1b28",
+    registry = "gcr.io",
+    repository = "cloud-builders/bazel",
 )
 
 ## End rules_docker ##
