@@ -8,10 +8,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	pb "github.com/veganafro/mono/golang/pkg/dummer/v1"
 	dummy "github.com/veganafro/mono/golang/pkg/dummy/v1"
+	"google.golang.org/protobuf/types/known/emptypb"
 
 	"google.golang.org/grpc"
 
@@ -41,7 +41,7 @@ func (server *dummerServer) GetWorld(ctx context.Context, request *dummy.GetHell
 	defer conn.Close()
 
 	client := dummy.NewDummyServiceClient(conn)
-	response, error := client.GetHello(context.Background(), &empty.Empty{})
+	response, error := client.GetHello(context.Background(), &emptypb.Empty{})
 	if error != nil {
 		log.Println("Failed to request dummy.GetHello | ", error)
 		return nil, error

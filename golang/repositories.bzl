@@ -82,14 +82,4 @@ def go_deps():
         version = "%s" % ORG_PROTOBUF_VERSION,
     )
 
-    COM_PROTOBUF_SUM = "h1:ROPKBNFfQgOUMifHyP+KYbvpjbdoFNs+aK7DXlji0Tw="
-    COM_PROTOBUF_VERSION = "v1.5.2"
-
-    go_repository(
-        name = "com_github_golang_protobuf",
-        importpath = "github.com/golang/protobuf",
-        sum = "%s" % COM_PROTOBUF_SUM,
-        version = "%s" % COM_PROTOBUF_VERSION,
-    )
-
     ## End grpc-gateway dependencies ##
