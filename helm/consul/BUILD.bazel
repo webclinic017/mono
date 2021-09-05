@@ -6,6 +6,14 @@ helm_template(
     name = "consul",
     chart_tar = "@hashicorp//:chart.tgz",
     namespace = "consul",
+    values = {
+        "global.name": "consul",
+        "global.datacenter": "dc1",
+        "connectInject.enabled": "true",
+        "controller.enabled": "true",
+        "ui.enabled": "true",
+        "ui.service.type": "NodePort",
+    },
 )
 
 k8s_object(
