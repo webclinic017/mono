@@ -4,6 +4,7 @@
 .project
 .classpath
 .settings
+.ipynb_checkpoints
 
 # IDE - VSCode
 .vscode/*

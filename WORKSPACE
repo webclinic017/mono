@@ -45,8 +45,8 @@ helm_chart(
 # SEE: https://github.com/bazelbuild/rules_python/issues/437
 ## Begin rules_python - 05/13 ##
 
-RULES_PYTHON_SHA = "b6d46438523a3ec0f3cead544190ee13223a52f6a6765a29eae7b7cc24cc83a0"
-RULES_PYTHON_VERSION = "0.1.0"
+RULES_PYTHON_SHA = "934c9ceb552e84577b0faf1e5a2f0450314985b4d8712b2b70717dc679fdc01b"
+RULES_PYTHON_VERSION = "0.3.0"
 
 http_archive(
     name = "rules_python",
@@ -58,12 +58,21 @@ http_archive(
     ],
 )
 
+load("@rules_python//python:pip.bzl", "pip_install")
+
+# Create a central external repo, @my_deps, that contains Bazel targets for all the
+# third-party packages specified in the requirements.txt file.
+pip_install(
+   name = "py_deps",
+   requirements = "//python:requirements.txt",
+)
+
 ## End rules_python - 05/13 ##
 
 ## Begin com_google_protobuf - 05/13 ##
 
-COM_GOOGLE_PROTOBUF_SHA = "eaba1dd133ac5167e8b08bc3268b2d33c6e9f2dcb14ec0f97f3d3eed9b395863"
-COM_GOOGLE_PROTOBUF_VERSION = "3.17.0"
+COM_GOOGLE_PROTOBUF_SHA = "14e8042b5da37652c92ef6a2759e7d2979d295f60afd7767825e3de68c856c54"
+COM_GOOGLE_PROTOBUF_VERSION = "3.18.0"
 
 http_archive(
     name = "com_google_protobuf",

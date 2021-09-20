@@ -1,0 +1,14 @@
+load("@rules_python//python:defs.bzl", "py_binary")
+load("@py_deps//:requirements.bzl", "requirement")
+
+py_binary(
+    name = "start_local_runtime",
+    srcs = [
+        "start_local_runtime.py",
+    ],
+    srcs_version = "PY3",
+    deps = [
+        requirement("jupyter_http_over_ws"),
+        requirement("notebook"),
+    ],
+)
