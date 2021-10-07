@@ -1,6 +1,6 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image", "container_push")
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
 load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
 
@@ -25,34 +25,28 @@ go_binary(
     visibility = ["//visibility:public"],
 )
 
-pkg_tar(
-    name = "cmd_dummy_tar",
-    mode = "0755",
-    package_dir = "/",
-    srcs = [
-        "BUILD.bazel",
-        "main.go",
-    ],
-    strip_prefix = "/",
+container_image(
+    name = "dummy_go_image_base",
+    base = "@debian_base//image",
+    env = {
+        "PORT": "8000",
+    },
 )
 
-container_image(
-    name = "dummy_image",
-    base = "@bazel_4_2_0//image",
-    entrypoint = ["bazel", "run", "//golang/cmd/dummy:dummy"],
-    env = {
-        "PORT": "8000"
-    },
-    repository = "veganafro",
-    tars = [
-        ":cmd_dummy_tar",
-        "//:build_tar",
-        "//:workspace_tar",
-        "//golang:build_tar",
-        "//golang:repositories_tar",
-        "//golang/pkg/dummy/v1:pkg_dummy_v1_tar",
-        "//proto/dummy/v1:dummy_v1_tar",
-    ],
+go_image(
+    name = "dummy_go_image",
+    base = ":dummy_go_image_base",
+    embed = [":dummy_lib"],
+    visibility = ["//visibility:public"],
+)
+
+container_push(
+    name = "dummy_go_image_push",
+    format = "OCI",
+    image = ":dummy_go_image",
+    registry = "index.docker.io",
+    repository = "veganafro/dummy_image",
+    tag = "dev",
 )
 
 k8s_object(
@@ -83,13 +77,4 @@ k8s_objects(
         ":dummy_deployment",
         ":dummy_service",
     ],
-)
-
-container_push(
-    name = "dummy_push",
-    format = "Docker",
-    image = ":dummy_image",
-    registry = "index.docker.io",
-    repository = "veganafro/dummy_image",
-    tag = "dev",
 )

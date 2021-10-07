@@ -1,6 +1,6 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image", "container_push")
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 
 go_library(
     name = "dummer_lib",
@@ -24,42 +24,25 @@ go_binary(
     visibility = ["//visibility:public"],
 )
 
-pkg_tar(
-    name = "cmd_dummer_tar",
-    mode = "0755",
-    package_dir = "/",
-    srcs = [
-        "BUILD.bazel",
-        "main.go",
-    ],
-    strip_prefix = "/",
-)
-
 container_image(
-    name = "dummer_image",
-    base = "@bazel_4_2_0//image",
-    entrypoint = ["bazel", "run", "//golang/cmd/dummer:dummer"],
+    name = "dummer_go_image_base",
+    base = "@debian_base//image",
     env = {
         "PORT": "8001",
     },
-    repository = "veganafro",
-    tars = [
-        ":cmd_dummer_tar",
-        "//:build_tar",
-        "//:workspace_tar",
-        "//golang:build_tar",
-        "//golang:repositories_tar",
-        "//golang/pkg/dummy/v1:pkg_dummy_v1_tar",
-        "//golang/pkg/dummer/v1:pkg_dummer_v1_tar",
-        "//proto/dummy/v1:dummy_v1_tar",
-        "//proto/dummer/v1:dummer_v1_tar",
-    ],
+)
+
+go_image(
+    name = "dummer_go_image",
+    base = ":dummer_go_image_base",
+    embed = [":dummer_lib"],
+    visibility = ["//visibility:public"],
 )
 
 container_push(
-    name = "dummer_push",
-    format = "Docker",
-    image = ":dummer_image",
+    name = "dummer_go_image_push",
+    format = "OCI",
+    image = ":dummer_go_image",
     registry = "index.docker.io",
     repository = "veganafro/dummer_image",
     tag = "dev",

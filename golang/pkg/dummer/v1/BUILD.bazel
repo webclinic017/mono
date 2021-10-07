@@ -1,6 +1,5 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 go_proto_library(
     name = "v1_go_proto",
@@ -23,16 +22,5 @@ go_library(
     name = "dummer",
     embed = [":v1_go_proto"],
     importpath = "github.com/veganafro/mono/golang/pkg/dummer/v1",
-    visibility = ["//visibility:public"],
-)
-
-pkg_tar(
-    name = "pkg_dummer_v1_tar",
-    mode = "0755",
-    package_dir = "/",
-    srcs = [
-        "BUILD.bazel",
-    ],
-    strip_prefix = "/",
     visibility = ["//visibility:public"],
 )

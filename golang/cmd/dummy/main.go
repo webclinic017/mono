@@ -36,6 +36,8 @@ func main() {
 		log.Fatal("Failed to get port from environment")
 	}
 
+	log.Println("Starting up dummy service")
+
 	grpcServer := grpc.NewServer()
 	pb.RegisterDummyServiceServer(grpcServer, &dummyServer{})
 

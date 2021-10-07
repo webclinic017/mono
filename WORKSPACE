@@ -204,14 +204,18 @@ load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
 
 container_deps()
 
+load("@io_bazel_rules_docker//go:image.bzl", _go_image_repos = "repositories")
+
+_go_image_repos()
+
 load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
 
 container_pull(
-    name = "bazel_4_2_0",
-    # 'tag' is also supported, but digest is encouraged for reproducibility.
-    digest = "sha256:c30c0bad867cb2f99ca6b27808e9b6a6148b64dc84c5daca3d24c0d8d6fc1b28",
-    registry = "gcr.io",
-    repository = "cloud-builders/bazel",
+  name = "debian_base",
+  registry = "gcr.io",
+  repository = "distroless/static",
+  # 'tag' is also supported, but digest is encouraged for reproducibility.
+  digest = "sha256:a5635fa9dda1cf81666d8c288130bf3519bdeab1b7ed717db496a73d25d1b35c",
 )
 
 ## End rules_docker ##
@@ -241,27 +245,3 @@ load("@io_bazel_rules_k8s//k8s:k8s_go_deps.bzl", k8s_go_deps = "deps")
 k8s_go_deps()
 
 ## End rules_k8s 07/01 ##
-
-## Begin rules_pkg ##
-
-RULES_PKG_SHA = "038f1caa773a7e35b3663865ffb003169c6a71dc995e39bf4815792f385d837d"
-RULES_PKG_VERSION = "0.4.0"
-
-http_archive(
-    name = "rules_pkg",
-    sha256 = RULES_PKG_SHA,
-    urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_pkg/releases/download/{}/rules_pkg-{}.tar.gz".format(
-            RULES_PKG_VERSION, RULES_PKG_VERSION
-        ),
-        "https://github.com/bazelbuild/rules_pkg/releases/download/{}/rules_pkg-{}.tar.gz".format(
-            RULES_PKG_VERSION, RULES_PKG_VERSION
-        ),
-    ],
-)
-
-load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
-
-rules_pkg_dependencies()
-
-## End rules_pkg ##
