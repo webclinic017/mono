@@ -50,10 +50,27 @@ container_push(
 )
 
 k8s_object(
+    name = "dummy_namespace",
+    cluster = "minikube",
+    kind = "namespace",
+    template = ":dummy-namespace.yaml",
+)
+
+k8s_object(
+    name = "dummy_serviceaccount",
+    cluster = "minikube",
+    kind = "serviceaccount",
+    template = ":dummy-serviceaccount.yaml",
+)
+
+k8s_object(
     name = "dummy_deployment",
     cluster = "minikube",
     kind = "deployment",
     template = ":dummy-deployment.yaml",
+    images = {
+        "veganafro/dummy_image:dev": ":dummy_go_image",
+    },
 )
 
 k8s_object(
@@ -63,17 +80,11 @@ k8s_object(
     template = ":dummy-service.yaml",
 )
 
-k8s_object(
-    name = "dummy_namespace",
-    cluster = "minikube",
-    kind = "namespace",
-    template = ":dummy-namespace.yaml",
-)
-
 k8s_objects(
-    name = "dummy_objects",
+    name = "dummy_all",
     objects = [
         ":dummy_namespace",
+        ":dummy_serviceaccount",
         ":dummy_deployment",
         ":dummy_service",
     ],

@@ -12,7 +12,10 @@ spec:
     metadata:
       labels:
         app: dummy
+      annotations:
+        'consul.hashicorp.com/connect-inject': 'true'
     spec:
+      serviceAccountName: dummy
       containers:
       - name: dummy
         image: veganafro/dummy_image:dev
@@ -20,5 +23,5 @@ spec:
         - containerPort: 8000
         resources:
           limits:
-            memory: 1024Mi
+            memory: 2048Mi
             cpu: "2"
