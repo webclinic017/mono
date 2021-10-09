@@ -178,6 +178,10 @@ http_archive(
     ],
 )
 
+load("@com_github_grpc_ecosystem_grpc_gateway_v2//:repositories.bzl", "go_repositories")
+
+go_repositories()
+
 ## End grpc-gateway ##
 
 ## Begin rules_docker ##
