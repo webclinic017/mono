@@ -34,14 +34,48 @@ def go_deps():
 
     ## Begin grpc-gateway dependencies - 05/13 ##
 
-    ORG_PROTOBUF_SUM = "h1:9q0QmTI4eRPtz6boOQmLYwt+qCgq0jsYwAQnmE0givc="
-    ORG_PROTOBUF_VERSION = "v1.27.1"
+    PROTOBUF_SUM = "h1:9q0QmTI4eRPtz6boOQmLYwt+qCgq0jsYwAQnmE0givc="
+    PROTOBUF_VERSION = "v1.27.1"
 
     go_repository(
         name = "org_golang_google_protobuf",
         importpath = "google.golang.org/protobuf",
-        sum = "%s" % ORG_PROTOBUF_SUM,
-        version = "%s" % ORG_PROTOBUF_VERSION,
+        sum = "%s" % PROTOBUF_SUM,
+        version = "%s" % PROTOBUF_VERSION,
     )
 
     ## End grpc-gateway dependencies ##
+
+    ## Begin consul dependencies ##
+
+    HC_LOG_SUM = "h1:bkKf0BeBXcSYa7f5Fyi9gMuQ8gNsxeiNpZjR6VxNZeo="
+    HC_LOG_VERSION = "v1.0.0"
+
+    go_repository(
+        name = "com_github_hashicorp_go_hclog",
+        importpath = "github.com/hashicorp/go-hclog",
+        sum = "%s" % HC_LOG_SUM,
+        version = "%s" % HC_LOG_VERSION,
+    )
+
+    ROOT_CERTS_SUM = "h1:jzhAVGtqPKbwpyCPELlgNWhE1znq+qwJtW5Oi2viEzc="
+    ROOT_CERTS_VERSION = "v1.0.2"
+
+    go_repository(
+        name = "com_github_hashicorp_go_rootcerts",
+        importpath = "github.com/hashicorp/go-rootcerts",
+        sum = "%s" % ROOT_CERTS_SUM,
+        version = "%s" % ROOT_CERTS_VERSION,
+    )
+
+    CONSUL_SUM = "h1:Hw/G8TtRvOElqxVIhBzXciiSTbapq8hZ2XKZsXk5ZCE="
+    CONSUL_VERSION = "v1.11.0"
+
+    go_repository(
+        name = "com_github_hashicorp_consul_api",
+        importpath = "github.com/hashicorp/consul/api",
+        sum = "%s" % CONSUL_SUM,
+        version = "%s" % CONSUL_VERSION,
+    )
+
+    ## End consul dependencies ##

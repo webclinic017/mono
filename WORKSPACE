@@ -2,24 +2,29 @@
 # gazelle:repository go_repository name=org_golang_x_sys importpath=golang.org/x/sys
 # gazelle:repository go_repository name=com_github_google_go_containerregistry importpath=github.com/vdemeester/k8s-pkg-credentialprovider
 # gazelle:reposiroty go_repository name=com_github_google_go_containerregistry importpath=k8s.io/client-go/kubernetes
+# gazelle:reposiroty go_repository name=com_github_armon_go_metrics importpath=github.com/circonus-labs/circonus-gometrics
+# gazelle:repository_macro golang/repositories.bzl%go_deps
 
 workspace(
     name = "veganafro_mono",
 )
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 ## Begin df ##
 
-DF_COMMIT = "42bedcba494c8d46b9fbc6aaf40c0202d217f29e"
-DF_SHALLOW_SINCE = "1619103159 +0100"
+DF_VERSION = "1.20.0"
+DF_SHA = "527c30e8665b4be20a55610b60da5be28fbda0806d131929e33e3bc2b54aad00"
 
-git_repository(
+http_archive(
     name = "df",
-    commit = DF_COMMIT,
-    remote = "https://github.com/dataform-co/dataform.git",
-    shallow_since = DF_SHALLOW_SINCE,
+    sha256 = DF_SHA,
+    strip_prefix = "dataform-%s" % DF_VERSION,
+    urls = [
+        "https://github.com/dataform-co/dataform/archive/{}.tar.gz".format(
+            DF_VERSION
+        ),
+    ],
 )
 
 load("@df//tools/helm:repository_rules.bzl", "helm_tool", "helm_chart")
@@ -31,7 +36,7 @@ helm_tool(
     version = HEML_TOOL_VERSION,
 )
 
-CONSUL_CHART_VERSION = "0.33.0"
+CONSUL_CHART_VERSION = "0.34.1"
 
 helm_chart(
     name = "hashicorp",
@@ -87,16 +92,16 @@ http_archive(
 
 ## Begin rules_proto - 05/13 ##
 
-RULES_PROTO_SHA = "9fc210a34f0f9e7cc31598d109b5d069ef44911a82f507d5a88716db171615a8"
-RULES_PROTO_TAG = "f7a30f6f80006b591fa7c437fe5a951eb10bcbcf"
+RULES_PROTO_SHA = "66bfdf8782796239d3875d37e7de19b1d94301e8972b3cbd2446b332429b4df1"
+RULES_PROTO_VERSION = "4.0.0"
 
 http_archive(
     name = "rules_proto",
     sha256 = RULES_PROTO_SHA,
-    strip_prefix = "rules_proto-%s" % RULES_PROTO_TAG,
+    strip_prefix = "rules_proto-%s" % RULES_PROTO_VERSION,
     urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_proto/archive/%s.tar.gz" % RULES_PROTO_TAG,
-        "https://github.com/bazelbuild/rules_proto/archive/%s.tar.gz" % RULES_PROTO_TAG,
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_proto/archive/refs/tags/%s.tar.gz" % RULES_PROTO_VERSION,
+        "https://github.com/bazelbuild/rules_proto/archive/refs/tags/%s.tar.gz" % RULES_PROTO_VERSION,
     ],
 )
 
@@ -109,8 +114,8 @@ rules_proto_toolchains()
 
 ## Begin io_bazel_rules_go - 05/13 ##
 
-RULES_GO_SHA = "8e968b5fcea1d2d64071872b12737bbb5514524ee5f0a4f54f5920266c261acb"
-RULES_GO_VERSION = "0.28.0"
+RULES_GO_SHA = "2b1641428dff9018f9e85c0384f03ec6c10660d935b750e3fa1492a281a53b0f"
+RULES_GO_VERSION = "0.29.0"
 
 http_archive(
     name = "io_bazel_rules_go",
@@ -129,8 +134,8 @@ http_archive(
 
 ## Begin bazel_gazelle - 05/13 ##
 
-BAZEL_GAZELLE_SHA = "222e49f034ca7a1d1231422cdb67066b885819885c356673cb1f72f748a3c9d4"
-BAZEL_GAZELLE_VERSION = "0.22.3"
+BAZEL_GAZELLE_SHA = "de69a09dc70417580aabf20a28619bb3ef60d038470c7cf8442fafcf627c21cb"
+BAZEL_GAZELLE_VERSION = "0.24.0"
 
 http_archive(
     name = "bazel_gazelle",
@@ -148,7 +153,7 @@ http_archive(
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
-go_register_toolchains(version = "1.16")
+go_register_toolchains(version = "1.17.1")
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
@@ -166,15 +171,15 @@ protobuf_deps()
 
 ## Begin grpc-gateway - 05/13 ##
 
-GRPC_GATEWAY_V2_COMMIT = "74ecd1deffacf97bcbee90e81c631ef6a3c275f2"
-GRPC_GATEWAY_V2_SHA = "6c98b5b72512a5ff232c76503a74243469cb2772d486fe38629c13878ce7cf8a"
+GRPC_GATEWAY_V2_SHA = "4a1a50fcb2dafb0134db0be669d3d8d8dd0d6933f88a3e580fee2727ccf5ebc2"
+GRPC_GATEWAY_V2_VERSION = "2.6.0"
 
 http_archive(
     name = "com_github_grpc_ecosystem_grpc_gateway_v2",
     sha256 = GRPC_GATEWAY_V2_SHA,
-    strip_prefix = "grpc-gateway-%s" % GRPC_GATEWAY_V2_COMMIT,
+    strip_prefix = "grpc-gateway-%s" % GRPC_GATEWAY_V2_VERSION,
     urls = [
-        "https://github.com/grpc-ecosystem/grpc-gateway/archive/%s.tar.gz" % GRPC_GATEWAY_V2_COMMIT
+        "https://github.com/grpc-ecosystem/grpc-gateway/archive/v%s.tar.gz" % GRPC_GATEWAY_V2_VERSION
     ],
 )
 

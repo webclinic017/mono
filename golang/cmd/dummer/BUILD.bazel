@@ -1,6 +1,8 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image", "container_push")
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
+load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
 
 go_library(
     name = "dummer_lib",
@@ -8,6 +10,7 @@ go_library(
     importpath = "github.com/veganafro/mono/golang/cmd/dummer",
     visibility = ["//visibility:private"],
     deps = [
+        "//golang/internal/resolvinator:resolvinator",
         "//golang/pkg/dummer/v1:dummer",
         "//golang/pkg/dummy/v1:dummy",
         "@com_github_grpc_ecosystem_grpc_gateway_v2//runtime:go_default_library",
@@ -46,4 +49,45 @@ container_push(
     registry = "index.docker.io",
     repository = "veganafro/dummer_image",
     tag = "dev",
+)
+
+k8s_object(
+    name = "dummer_namespace",
+    cluster = "minikube",
+    kind = "namespace",
+    template = ":dummer-namespace.yaml",
+)
+
+k8s_object(
+    name = "dummer_serviceaccount",
+    cluster = "minikube",
+    kind = "serviceaccount",
+    template = ":dummer-serviceaccount.yaml",
+)
+
+k8s_object(
+    name = "dummer_deployment",
+    cluster = "minikube",
+    kind = "deployment",
+    template = ":dummer-deployment.yaml",
+    images = {
+        "veganafro/dummer_image:dev": ":dummer_go_image",
+    },
+)
+
+k8s_object(
+    name = "dummer_service",
+    cluster = "minikube",
+    kind = "service",
+    template = ":dummer-service.yaml",
+)
+
+k8s_objects(
+    name = "dummer_all",
+    objects = [
+        ":dummer_namespace",
+        ":dummer_serviceaccount",
+        ":dummer_deployment",
+        ":dummer_service",
+    ],
 )

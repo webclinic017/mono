@@ -1,4 +1,8 @@
 {
+    "editor.rulers": [120],
+    "[markdown]":  {
+        "editor.wordWrap": "off",
+    },
     "files.exclude": {
         "android": true,
     },
@@ -10,7 +14,6 @@
     },
     "go.goroot": "~/development/mono/bazel-mono/external/go_sdk",
     "go.toolsEnvVars": {
-      "GOPACKAGESDRIVER_BAZEL_QUERY": "kind(go_binary, //golang/...)",
       "GOPACKAGESDRIVER": "~/development/mono/scripts/bash/gopackagesdriver.sh"
     },
     "go.useLanguageServer": true,

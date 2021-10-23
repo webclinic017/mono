@@ -1,12 +1,43 @@
 global:
   name: consul
-  datacenter: datacenter01
+  datacenter: mono-dc01
+  # By setting `manageSystemACLs` to true, the ACL system
+  # will configure itself. You do not need to take any
+  # action beyond setting the value in the config file.
+  acls:
+    manageSystemACLs: true
+  # This stanza provides the helm chart with the name
+  # of a Kubernetes secret to retrieve
+  # and use as the gossip encryption key at runtime.
+  # You must create a valid key and register it
+  # as a secret with Kubernetes.
+  gossipEncryption:
+    secretName: 'consul-gossip-encryption-key'
+    secretKey: 'key'
+  tls:
+    enabled: true
+    # By enabling TLS and setting `enableAutoEncrypt` to true,
+    # the TLS system will configure itself. You
+    # do not need to take any action beyond setting these values
+    # in the config file.
+    enableAutoEncrypt: true
+    # The `verify` setting instructs Consul to verify the
+    # authenticity of servers and clients.
+    verify: true
 server:
+  # For production deployments, the replica count should be 3 to 5
   replicas: 1
+  securityContext:
+    runAsNonRoot: false
+    runAsUser: 0
 ui:
   enabled: true
   service:
     type: 'NodePort'
+client:
+  extraConfig: |
+    {"advertise_reconnect_timeout": "15m"}
+  grpc: true
 connectInject:
   enabled: true
 controller:

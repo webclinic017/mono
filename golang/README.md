@@ -53,7 +53,7 @@ Once service endpoints are implemented, use
 ```
 $ bazel run //cmd/[SERVICE]:SERVICE
 ```
-to bring up the service locally. Also, sure to containerize the service - check out the `dummy` or `dummer` service entrypoints'
+to bring up the service locally. Also, be sure to containerize the service - check out the `dummy` or `dummer` service entrypoints'
 `BUILD.bazel` files for examples.
 
 ### Automated testing

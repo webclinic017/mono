@@ -1,26 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dummy
-  namespace: dummy
+  name: dummer
+  namespace: dummer
 spec:
   selector:
     matchLabels:
-      app: dummy
+      app: dummer
   replicas: 1
   template:
     metadata:
       labels:
-        app: dummy
+        app: dummer
       annotations:
         consul.hashicorp.com/connect-inject: 'true'
+        consul.hashicorp.com/connect-service-upstreams: 'dummy:8000'
     spec:
-      serviceAccountName: dummy
+      serviceAccountName: dummer
       containers:
-      - name: dummy
-        image: veganafro/dummy_image:dev
+      - name: dummer
+        image: veganafro/dummer_image:dev
         ports:
-        - containerPort: 8000
+        - containerPort: 8001
         resources:
           limits:
             memory: 512Mi

@@ -2,13 +2,16 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/veganafro/mono/golang/internal/resolvinator"
 	pb "github.com/veganafro/mono/golang/pkg/dummer/v1"
 	dummy "github.com/veganafro/mono/golang/pkg/dummy/v1"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -20,7 +23,8 @@ import (
 )
 
 const (
-	host = "0.0.0.0"
+	dummySvc = "dummy"
+	host     = "localhost"
 )
 
 type dummerServer struct {
@@ -28,12 +32,8 @@ type dummerServer struct {
 }
 
 func (server *dummerServer) GetWorld(ctx context.Context, request *dummy.GetHelloRequest) (*dummy.GetHelloResponse, error) {
-	var DummyHost string
-	if DummyHost = os.Getenv("DUMMY_HOST"); DummyHost == "" {
-		DummyHost = "0.0.0.0:8000"
-	}
-
-	conn, error := grpc.Dial(DummyHost, grpc.WithInsecure())
+	conn, error := grpc.DialContext(
+		context.Background(), fmt.Sprintf("consul://service/%s", dummySvc), grpc.WithInsecure())
 	if error != nil {
 		log.Println("Failed to dial dummy service | ", error)
 		return nil, error
@@ -51,8 +51,8 @@ func (server *dummerServer) GetWorld(ctx context.Context, request *dummy.GetHell
 }
 
 func main() {
-	var PORT string
-	if PORT = os.Getenv("PORT"); PORT == "" {
+	var port string
+	if port = os.Getenv("PORT"); port == "" {
 		log.Fatal("Failed to get port from environment")
 	}
 
@@ -65,10 +65,12 @@ func main() {
 
 	ctx := context.Background()
 	gatewayMux := runtime.NewServeMux()
-	error := pb.RegisterDummerServiceHandlerFromEndpoint(ctx, gatewayMux, host+":"+PORT, dialOpts)
+	error := pb.RegisterDummerServiceHandlerFromEndpoint(ctx, gatewayMux, fmt.Sprintf("%s:%s", host, port), dialOpts)
 	if error != nil {
 		log.Fatal("Failed to register service handler from endpoint | ", error)
 	}
+
+	resolvinator.RegisterDefault(time.Second * 5)
 
 	httpMux := http.NewServeMux()
 	httpMux.Handle("/world", gatewayMux)
@@ -83,11 +85,11 @@ func main() {
 
 	http2Server := &http2.Server{}
 	http1Server := &http.Server{
-		Addr:    host + ":" + PORT,
+		Addr:    fmt.Sprintf("%s:%s", host, port),
 		Handler: h2c.NewHandler(httpHandler, http2Server),
 	}
 
-	conn, error := net.Listen("tcp", host+":"+PORT)
+	conn, error := net.Listen("tcp", fmt.Sprintf("%s:%s", host, port))
 	if error != nil {
 		log.Fatal("Failed to start tcp connection | ", error)
 	}

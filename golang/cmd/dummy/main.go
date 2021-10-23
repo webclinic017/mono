@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 	"net/http"
@@ -19,7 +20,7 @@ import (
 )
 
 const (
-	host = "0.0.0.0"
+	host = "localhost"
 )
 
 type dummyServer struct {
@@ -31,8 +32,8 @@ func (server *dummyServer) GetHello(ctx context.Context, request *emptypb.Empty)
 }
 
 func main() {
-	var PORT string
-	if PORT = os.Getenv("PORT"); PORT == "" {
+	var port string
+	if port = os.Getenv("PORT"); port == "" {
 		log.Fatal("Failed to get port from environment")
 	}
 
@@ -45,7 +46,7 @@ func main() {
 
 	ctx := context.Background()
 	gatewayMux := runtime.NewServeMux()
-	error := pb.RegisterDummyServiceHandlerFromEndpoint(ctx, gatewayMux, host+":"+PORT, dialOpts)
+	error := pb.RegisterDummyServiceHandlerFromEndpoint(ctx, gatewayMux, fmt.Sprintf("%s:%s", host, port), dialOpts)
 	if error != nil {
 		log.Fatal("Failed to register service handler from endpoint | ", error)
 	}
@@ -63,11 +64,11 @@ func main() {
 
 	http2Server := &http2.Server{}
 	http1Server := &http.Server{
-		Addr:    host + ":" + PORT,
+		Addr:    fmt.Sprintf("%s:%s", host, port),
 		Handler: h2c.NewHandler(httpHandler, http2Server),
 	}
 
-	conn, error := net.Listen("tcp", host+":"+PORT)
+	conn, error := net.Listen("tcp", fmt.Sprintf("%s:%s", host, port))
 	if error != nil {
 		log.Fatal("Failed to start tcp connection | ", error)
 	}
