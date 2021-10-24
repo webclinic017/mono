@@ -3,13 +3,13 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"net"
 	"net/http"
 	"os"
 	"strings"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/veganafro/mono/golang/internal/logwrapper"
 	pb "github.com/veganafro/mono/golang/pkg/dummy/v1"
 	"google.golang.org/protobuf/types/known/emptypb"
 
@@ -20,7 +20,12 @@ import (
 )
 
 const (
-	host = "localhost"
+	host        = "localhost"
+	serviceName = "dummy"
+)
+
+var (
+	standardLogger = logwrapper.NewLogger()
 )
 
 type dummyServer struct {
@@ -34,10 +39,10 @@ func (server *dummyServer) GetHello(ctx context.Context, request *emptypb.Empty)
 func main() {
 	var port string
 	if port = os.Getenv("PORT"); port == "" {
-		log.Fatal("Failed to get port from environment")
+		standardLogger.PortMissing(serviceName)
 	}
 
-	log.Println("Starting up dummy service")
+	standardLogger.ServiceStarting(serviceName)
 
 	grpcServer := grpc.NewServer()
 	pb.RegisterDummyServiceServer(grpcServer, &dummyServer{})
@@ -48,7 +53,7 @@ func main() {
 	gatewayMux := runtime.NewServeMux()
 	error := pb.RegisterDummyServiceHandlerFromEndpoint(ctx, gatewayMux, fmt.Sprintf("%s:%s", host, port), dialOpts)
 	if error != nil {
-		log.Fatal("Failed to register service handler from endpoint | ", error)
+		standardLogger.ServiceHandlerRegisterFailed(serviceName, error.Error())
 	}
 
 	httpMux := http.NewServeMux()
@@ -70,11 +75,11 @@ func main() {
 
 	conn, error := net.Listen("tcp", fmt.Sprintf("%s:%s", host, port))
 	if error != nil {
-		log.Fatal("Failed to start tcp connection | ", error)
+		standardLogger.TcpConnectionStartFailed(serviceName, error.Error())
 	}
 
 	error = http1Server.Serve(conn)
 	if error != nil {
-		log.Fatal("Failed to start http server | ", error)
+		standardLogger.HttpOneStartFailed(serviceName, error.Error())
 	}
 }

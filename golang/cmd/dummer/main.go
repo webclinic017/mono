@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"net"
 	"net/http"
 	"os"
@@ -11,6 +10,7 @@ import (
 	"time"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/veganafro/mono/golang/internal/logwrapper"
 	"github.com/veganafro/mono/golang/internal/resolvinator"
 	pb "github.com/veganafro/mono/golang/pkg/dummer/v1"
 	dummy "github.com/veganafro/mono/golang/pkg/dummy/v1"
@@ -23,8 +23,13 @@ import (
 )
 
 const (
-	dummySvc = "dummy"
-	host     = "localhost"
+	dummySvc    = "dummy"
+	host        = "localhost"
+	serviceName = "dummer"
+)
+
+var (
+	standardLogger = logwrapper.NewLogger()
 )
 
 type dummerServer struct {
@@ -35,7 +40,7 @@ func (server *dummerServer) GetWorld(ctx context.Context, request *dummy.GetHell
 	conn, error := grpc.DialContext(
 		context.Background(), fmt.Sprintf("consul://service/%s", dummySvc), grpc.WithInsecure())
 	if error != nil {
-		log.Println("Failed to dial dummy service | ", error)
+		standardLogger.GrpcDialFailed(serviceName, dummySvc, error.Error())
 		return nil, error
 	}
 	defer conn.Close()
@@ -43,7 +48,7 @@ func (server *dummerServer) GetWorld(ctx context.Context, request *dummy.GetHell
 	client := dummy.NewDummyServiceClient(conn)
 	response, error := client.GetHello(context.Background(), &emptypb.Empty{})
 	if error != nil {
-		log.Println("Failed to request dummy.GetHello | ", error)
+		standardLogger.GrpcRequestFailed(serviceName, dummySvc, "GetHello", error.Error())
 		return nil, error
 	}
 
@@ -53,10 +58,10 @@ func (server *dummerServer) GetWorld(ctx context.Context, request *dummy.GetHell
 func main() {
 	var port string
 	if port = os.Getenv("PORT"); port == "" {
-		log.Fatal("Failed to get port from environment")
+		standardLogger.PortMissing(serviceName)
 	}
 
-	log.Println("Starting up dummer service")
+	standardLogger.ServiceStarting(serviceName)
 
 	grpcServer := grpc.NewServer()
 	pb.RegisterDummerServiceServer(grpcServer, &dummerServer{})
@@ -67,7 +72,7 @@ func main() {
 	gatewayMux := runtime.NewServeMux()
 	error := pb.RegisterDummerServiceHandlerFromEndpoint(ctx, gatewayMux, fmt.Sprintf("%s:%s", host, port), dialOpts)
 	if error != nil {
-		log.Fatal("Failed to register service handler from endpoint | ", error)
+		standardLogger.ServiceHandlerRegisterFailed(serviceName, error.Error())
 	}
 
 	resolvinator.RegisterDefault(time.Second * 5)
@@ -91,11 +96,11 @@ func main() {
 
 	conn, error := net.Listen("tcp", fmt.Sprintf("%s:%s", host, port))
 	if error != nil {
-		log.Fatal("Failed to start tcp connection | ", error)
+		standardLogger.TcpConnectionStartFailed(serviceName, error.Error())
 	}
 
 	error = http1Server.Serve(conn)
 	if error != nil {
-		log.Fatal("Failed to start http1 server | ", error)
+		standardLogger.HttpOneStartFailed(serviceName, error.Error())
 	}
 }

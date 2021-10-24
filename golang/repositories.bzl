@@ -34,6 +34,16 @@ def go_deps():
 
     ## Begin grpc-gateway dependencies - 05/13 ##
 
+    YAML_V2_SUM = "h1:clyUAQHOM3G0M3f5vQj7LuJrETvjVot3Z5el9nffUtU="
+    YAML_V2_VERSION = "v2.3.0"
+
+    go_repository(
+        name = "in_gopkg_yaml_v2",
+        importpath = "gopkg.in/yaml.v2",
+        sum = "%s" % YAML_V2_SUM,
+        version = "%s" % YAML_V2_VERSION,
+    )
+
     PROTOBUF_SUM = "h1:9q0QmTI4eRPtz6boOQmLYwt+qCgq0jsYwAQnmE0givc="
     PROTOBUF_VERSION = "v1.27.1"
 
