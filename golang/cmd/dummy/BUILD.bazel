@@ -2,7 +2,6 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image", "container_push")
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
-load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
 
 go_library(
     name = "dummy_lib",
@@ -51,42 +50,10 @@ container_push(
 )
 
 k8s_object(
-    name = "dummy_namespace",
+    name = "dummy_all",
     cluster = "minikube",
-    kind = "namespace",
-    template = ":dummy-namespace.yaml",
-)
-
-k8s_object(
-    name = "dummy_serviceaccount",
-    cluster = "minikube",
-    kind = "serviceaccount",
-    template = ":dummy-serviceaccount.yaml",
-)
-
-k8s_object(
-    name = "dummy_deployment",
-    cluster = "minikube",
-    kind = "deployment",
-    template = ":dummy-deployment.yaml",
     images = {
         "veganafro/dummy_image:dev": ":dummy_go_image",
     },
-)
-
-k8s_object(
-    name = "dummy_service",
-    cluster = "minikube",
-    kind = "service",
-    template = ":dummy-service.yaml",
-)
-
-k8s_objects(
-    name = "dummy_all",
-    objects = [
-        ":dummy_namespace",
-        ":dummy_serviceaccount",
-        ":dummy_deployment",
-        ":dummy_service",
-    ],
+    template = ":dummy-all.yaml",
 )

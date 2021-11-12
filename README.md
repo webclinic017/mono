@@ -65,10 +65,10 @@ From here, use the editors and IDEs you're most comfortable with to make changes
 | Name | Version | Notes |
 |------|---------|-------|
 | [grpc_gateway](https://github.com/grpc-ecosystem/grpc-gateway) | [2.6.0](https://github.com/grpc-ecosystem/grpc-gateway/releases/tag/v2.6.0) | N/A |
-| [org_golang_google_grpc](google.golang.org/grpc) | [1.41.0](https://github.com/grpc/grpc-go/releases/tag/v1.41.0) | N/A |
-| [org_golang_x_net](golang.org/x/net) | [0.0.0-20211008194852-3b03d305991f](https://pkg.go.dev/golang.org/x/net@v0.0.0-20211008194852-3b03d305991f) | N/A |
-| [org_golang_google_protobuf](google.golang.org/protobuf) | [1.27.1](https://pkg.go.dev/google.golang.org/protobuf@v1.27.1) | N/A |
-| [com_github_hashicorp_consul_api](github.com/hashicorp/consul/tree/main/api) | [1.11.0](https://pkg.go.dev/github.com/hashicorp/consul/api@v1.11.0) | N/A |
+| [org_golang_google_grpc](https://google.golang.org/grpc) | [1.41.0](https://github.com/grpc/grpc-go/releases/tag/v1.41.0) | N/A |
+| [org_golang_x_net](https://golang.org/x/net) | [0.0.0-20211108170745-6635138e15ea](https://pkg.go.dev/golang.org/x/net@v0.0.0-20211108170745-6635138e15ea) | N/A |
+| [org_golang_google_protobuf](https://google.golang.org/protobuf) | [1.27.1](https://pkg.go.dev/google.golang.org/protobuf@v1.27.1) | N/A |
+| [com_github_hashicorp_consul_api](https://github.com/hashicorp/consul/tree/main/api) | [1.11.0](https://pkg.go.dev/github.com/hashicorp/consul/api@v1.11.0) | N/A |
 
 ### Helm
 
@@ -81,6 +81,13 @@ From here, use the editors and IDEs you're most comfortable with to make changes
 | Name | Version | Notes |
 |------|---------|-------|
 | [jupyter_http_over_ws](https://github.com/googlecolab/jupyter_http_over_ws) | [0.0.8](https://github.com/googlecolab/jupyter_http_over_ws/releases/tag/v0.0.8) | N/A |
+
+### Other
+
+| Name | Version | Notes |
+|------|---------|-------|
+| [minikube](https://github.com/kubernetes/minikube) | [1.23.2](https://github.com/kubernetes/minikube/releases/tag/v1.23.2) | N/A |
+| [kubectl](https://github.com/kubernetes/kubernetes) | [1.22.2](https://github.com/kubernetes/kubernetes/releases/tag/v1.22.2) | N/A |
 
 ## License
 

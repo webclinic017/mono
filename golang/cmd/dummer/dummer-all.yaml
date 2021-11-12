@@ -1,13 +1,42 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dummer
+  labels:
+    name: dummer
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dummer
+  namespace: dummer
+automountServiceAccountToken: true
+---
+apiVersion: v1
+kind: Service
 metadata:
   name: dummer
   namespace: dummer
 spec:
+  type: NodePort
+  selector:
+    app: dummer
+  ports:
+  - port: 8001
+    targetPort: 8001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dummer
+  name: dummer
+  namespace: dummer
+spec:
+  replicas: 1
   selector:
     matchLabels:
       app: dummer
-  replicas: 1
   template:
     metadata:
       labels:
@@ -26,3 +55,10 @@ spec:
           limits:
             memory: 512Mi
             cpu: "1"
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: dummer
+spec:
+  protocol: grpc

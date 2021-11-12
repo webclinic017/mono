@@ -7,11 +7,9 @@ import (
 	"net/http"
 	"os"
 	"strings"
-	"time"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/veganafro/mono/golang/internal/logwrapper"
-	"github.com/veganafro/mono/golang/internal/resolvinator"
 	pb "github.com/veganafro/mono/golang/pkg/dummer/v1"
 	dummy "github.com/veganafro/mono/golang/pkg/dummy/v1"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -24,6 +22,7 @@ import (
 
 const (
 	dummySvc    = "dummy"
+	dummyPort   = "8000"
 	host        = "localhost"
 	serviceName = "dummer"
 )
@@ -38,7 +37,7 @@ type dummerServer struct {
 
 func (server *dummerServer) GetWorld(ctx context.Context, request *dummy.GetHelloRequest) (*dummy.GetHelloResponse, error) {
 	conn, error := grpc.DialContext(
-		context.Background(), fmt.Sprintf("consul://service/%s", dummySvc), grpc.WithInsecure())
+		context.Background(), fmt.Sprintf("%s:%s", host, dummyPort), grpc.WithInsecure())
 	if error != nil {
 		standardLogger.GrpcDialFailed(serviceName, dummySvc, error.Error())
 		return nil, error
@@ -74,8 +73,6 @@ func main() {
 	if error != nil {
 		standardLogger.ServiceHandlerRegisterFailed(serviceName, error.Error())
 	}
-
-	resolvinator.RegisterDefault(time.Second * 5)
 
 	httpMux := http.NewServeMux()
 	httpMux.Handle("/world", gatewayMux)

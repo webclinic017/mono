@@ -20,8 +20,8 @@ def go_deps():
         version = "%s" % GRPC_VERSION,
     )
 
-    NET_SUM = "h1:1scJEYZBaF48BaG6tYbtxmLcXqwYGSfGcMoStTqkkIw="
-    NET_VERSION = "v0.0.0-20211008194852-3b03d305991f"
+    NET_SUM = "h1:FosBMXtOc8Tp9Hbo4ltl1WJSrTVewZU8MPnTPY2HdH8="
+    NET_VERSION = "v0.0.0-20211108170745-6635138e15ea"
 
     go_repository(
         name = "org_golang_x_net",
@@ -83,6 +83,7 @@ def go_deps():
 
     go_repository(
         name = "com_github_hashicorp_consul_api",
+        build_external = "external",
         importpath = "github.com/hashicorp/consul/api",
         sum = "%s" % CONSUL_SUM,
         version = "%s" % CONSUL_VERSION,
