@@ -25,6 +25,8 @@ golang
 
 `pkg` contains shared code and libraries - including Go implementations of gRPC services.
 
+In general, bias towards following Golang structure best practices as elaborated on [here](https://github.com/golang-standards/project-layout).
+
 ## Getting started
 
 ### Running existing services
