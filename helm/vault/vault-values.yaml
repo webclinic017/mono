@@ -1,0 +1,65 @@
+global:
+  enabled: true
+  tlsDisable: false
+injector:
+  enabled: true
+server:
+  enabled: true
+  # For HA configuration and because we need to manually init the vault,
+  # we need to define custom readiness/liveness Probe settings
+  readinessProbe:
+    enabled: true
+    path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
+  livenessProbe:
+    enabled: true
+    path: "/v1/sys/health?standbyok=true"
+    initialDelaySeconds: 60
+  # See https://learn.hashicorp.com/tutorials/vault/kubernetes-raft-deployment-guide?in=vault/kubernetes#stateful-storage
+  dataStorage:
+    enabled: true
+  # This configures the Vault Statefulset to create a PVC for audit logs.
+  # See https://www.vaultproject.io/docs/audit/index.html to learn more
+  auditStorage:
+    enabled: true
+  standalone:
+    enabled: false
+  volumeMounts:
+  - name: tls-server
+    mountPath: "/vault/userconfig/tls-server"
+    readOnly: true
+  - name: tls-ca
+    mountPath: "/vault/userconfig/tls-ca"
+    readOnly: true
+  volumes:
+  - name: tls-server
+    secret:
+      secretName: vault-tls
+  - name: tls-ca
+    secret:
+      secretName: ca-tls
+  extraEnvironmentVars:
+    VAULT_CACERT: /vault/userconfig/tls-ca/tls.crt
+  ha:
+    enabled: true
+    replicas: 1 # TODO Increase to at least 3 in production
+    raft:
+      enabled: true
+      setNodeId: true
+      config: |
+        ui = true
+        listener "tcp" {
+          address = "[::]:8200"
+          cluster_address = "[::]:8201"
+          tls_cert_file = "/vault/userconfig/tls-server/tls.crt"
+          tls_key_file = "/vault/userconfig/tls-server/tls.key"
+        }
+        storage "raft" {
+          path = "vault/data"
+        }
+        cluster_addr = "https://POD_IP:8201"
+        service_registration "kubernetes" {
+          namespace = "vault"
+          pod_name = "vault"
+        }
+ui:
+  enabled: true

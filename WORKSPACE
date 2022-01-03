@@ -11,23 +11,9 @@ workspace(
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-## Begin df ##
+## Begin helm ##
 
-DF_VERSION = "1.20.0"
-DF_SHA = "527c30e8665b4be20a55610b60da5be28fbda0806d131929e33e3bc2b54aad00"
-
-http_archive(
-    name = "df",
-    sha256 = DF_SHA,
-    strip_prefix = "dataform-%s" % DF_VERSION,
-    urls = [
-        "https://github.com/dataform-co/dataform/archive/{}.tar.gz".format(
-            DF_VERSION
-        ),
-    ],
-)
-
-load("@df//tools/helm:repository_rules.bzl", "helm_tool", "helm_chart")
+load("//tools/starlark/helm:repository_rules.bzl", "helm_tool", "helm_chart")
 
 HEML_TOOL_VERSION = "v3.6.2"
 
@@ -39,13 +25,24 @@ helm_tool(
 CONSUL_CHART_VERSION = "0.34.1"
 
 helm_chart(
-    name = "hashicorp",
+    name = "consul",
+    reponame = "hashicorp",
     chartname = "consul",
     repo_url = "https://helm.releases.hashicorp.com",
     version = CONSUL_CHART_VERSION,
 )
 
-## End df ##
+VAULT_CHART_VERSION = "0.18.0"
+
+helm_chart(
+    name = "vault",
+    reponame = "hashicorp",
+    chartname = "vault",
+    repo_url = "https://helm.releases.hashicorp.com",
+    version = VAULT_CHART_VERSION,
+)
+
+## End helm ##
 
 # SEE: https://github.com/bazelbuild/rules_python/issues/437
 ## Begin rules_python - 05/13 ##

@@ -1,0 +1,30 @@
+load("//tools/starlark/helm:helm_template.bzl", "helm_template")
+load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
+load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
+
+helm_template(
+    name = "vault",
+    chart_tar = "@vault//:chart.tgz",
+    namespace = "vault",
+    values_yaml_file = ":vault-values.yaml",
+)
+
+k8s_object(
+    name = "vault_object",
+    cluster = "minikube",
+    template = ":vault",
+)
+
+k8s_object(
+    name = "vault_namespace",
+    cluster = "minikube",
+    template = ":vault-namespace.yaml",
+)
+
+k8s_objects(
+    name = "vault_all",
+    objects = [
+        ":vault_namespace",
+        ":vault_object",
+    ]
+)

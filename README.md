@@ -51,7 +51,6 @@ From here, use the editors and IDEs you're most comfortable with to make changes
 
 | Name | Version | Notes |
 |------|---------|-------|
-| [dataform](https://github.com/dataform-co/dataform) | [1.20.0](https://github.com/dataform-co/dataform/releases/tag/1.20.0) | N/A |
 | [rules_python](https://github.com/bazelbuild/rules_python) | [0.3.0](https://github.com/bazelbuild/rules_python/releases/tag/0.3.0) | N/A |
 | [com_google_protobuf](https://github.com/protocolbuffers/protobuf) | [3.18.0](https://github.com/protocolbuffers/protobuf/releases/tag/v3.18.0) | N/A |
 | [rules_proto](https://github.com/bazelbuild/rules_proto) | [4.0.0](https://github.com/bazelbuild/rules_proto/releases/tag/4.0.0) | N/A |

@@ -1,4 +1,3 @@
 SOURCE := $(shell git rev-parse --show-toplevel)
 
-include $(SOURCE)/scripts/make/build.mk
-
+include $(SOURCE)/tools/make/build.mk

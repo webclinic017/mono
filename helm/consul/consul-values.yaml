@@ -26,7 +26,7 @@ global:
     httpsOnly: true
 server:
   enabled: true
-  # For production deployments, the replica count should be 3 to 5
+  # TODO For production deployments, the replica count should be 3 to 5
   replicas: 1
   securityContext:
     runAsNonRoot: false
@@ -41,10 +41,12 @@ server:
 ui:
   enabled: true
   service:
-    type: 'NodePort'
+    type: "NodePort"
 client:
   extraConfig: |
-    {"advertise_reconnect_timeout": "15m"}
+    {
+      "advertise_reconnect_timeout": "15m"
+    }
   grpc: true
 connectInject:
   enabled: true

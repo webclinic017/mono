@@ -1,10 +1,10 @@
-load("@df//tools/helm:helm_template.bzl", "helm_template")
+load("//tools/starlark/helm:helm_template.bzl", "helm_template")
 load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
 load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
 
 helm_template(
     name = "consul",
-    chart_tar = "@hashicorp//:chart.tgz",
+    chart_tar = "@consul//:chart.tgz",
     values_yaml_file = ":consul-values.yaml",
 )
 

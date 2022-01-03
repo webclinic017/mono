@@ -14,7 +14,7 @@
     },
     "go.goroot": "~/development/mono/bazel-mono/external/go_sdk",
     "go.toolsEnvVars": {
-      "GOPACKAGESDRIVER": "~/development/mono/scripts/bash/gopackagesdriver.sh"
+      "GOPACKAGESDRIVER": "~/development/mono/tools/bash/gopackagesdriver.sh"
     },
     "go.useLanguageServer": true,
 }
