@@ -18,10 +18,3 @@
 
 # Bazel generated output
 bazel-*
-
-# TLS certs and sign requests
-**.pem
-**.csr
-
-# TLS cert config
-tools/bash/**.json
