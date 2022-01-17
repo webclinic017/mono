@@ -29,3 +29,12 @@ Key features of Vault include:
 ## Helpful notes
 
 [What is vault](https://www.vaultproject.io/docs/what-is-vault)
+
+[Vault on k8s deployment guide](https://learn.hashicorp.com/tutorials/vault/kubernetes-raft-deployment-guide)
+
+Initialize and unseal a local vault dev cluster with:
+
+```
+$ kubectl --namespace vault exec --stdin=true --tty=true vault-0 -- vault operator init -key-shares=1 -key-threshold=1
+$ kubectl --namespace vault exec --stdin=true --tty=true vault-0 -- vault operator unseal
+```

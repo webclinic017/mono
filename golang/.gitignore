@@ -1,7 +1,3 @@
-# SSL certificates and keys
-certs
-insecure
-
 # Test binary, built with `go test -c`
 *.test
 

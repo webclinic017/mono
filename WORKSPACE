@@ -42,6 +42,16 @@ helm_chart(
     version = VAULT_CHART_VERSION,
 )
 
+CERT_MANAGER_VERSION = "v1.6.1"
+
+helm_chart(
+    name = "cert-manager",
+    reponame = "jetstack",
+    chartname = "cert-manager",
+    repo_url = "https://charts.jetstack.io",
+    version = CERT_MANAGER_VERSION,
+)
+
 ## End helm ##
 
 # SEE: https://github.com/bazelbuild/rules_python/issues/437

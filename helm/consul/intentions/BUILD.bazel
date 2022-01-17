@@ -2,14 +2,14 @@ load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
 load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
 
 k8s_object(
-    name = "dummer_to_dummy_allow",
+    name = "dummer-to-dummy-allow",
     cluster = "minikube",
     template = "dummer-to-dummy-allow.yaml",
 )
 
 k8s_objects(
-    name = "intentions_all",
+    name = "intentions-all",
     objects = [
-        ":dummer_to_dummy_allow",
+        ":dummer-to-dummy-allow",
     ],
 )

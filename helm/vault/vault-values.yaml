@@ -24,21 +24,15 @@ server:
   standalone:
     enabled: false
   volumeMounts:
-  - name: tls-server
-    mountPath: "/vault/userconfig/tls-server"
-    readOnly: true
-  - name: tls-ca
-    mountPath: "/vault/userconfig/tls-ca"
+  - name: tls
+    mountPath: "/vault/userconfig/tls"
     readOnly: true
   volumes:
-  - name: tls-server
+  - name: tls
     secret:
       secretName: vault-tls
-  - name: tls-ca
-    secret:
-      secretName: ca-tls
   extraEnvironmentVars:
-    VAULT_CACERT: /vault/userconfig/tls-ca/tls.crt
+    VAULT_CACERT: /vault/userconfig/tls/ca.crt
   ha:
     enabled: true
     replicas: 1 # TODO Increase to at least 3 in production
@@ -50,8 +44,8 @@ server:
         listener "tcp" {
           address = "[::]:8200"
           cluster_address = "[::]:8201"
-          tls_cert_file = "/vault/userconfig/tls-server/tls.crt"
-          tls_key_file = "/vault/userconfig/tls-server/tls.key"
+          tls_cert_file = "/vault/userconfig/tls/tls.crt"
+          tls_key_file = "/vault/userconfig/tls/tls.key"
         }
         storage "raft" {
           path = "vault/data"
