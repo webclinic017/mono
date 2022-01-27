@@ -9,9 +9,9 @@ import (
 	"strings"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	dummySvc "github.com/veganafro/mono/golang/internal/dummy/v1"
 	"github.com/veganafro/mono/golang/internal/logwrapper"
 	pb "github.com/veganafro/mono/golang/pkg/dummy/v1"
-	"google.golang.org/protobuf/types/known/emptypb"
 
 	"google.golang.org/grpc"
 
@@ -28,14 +28,6 @@ var (
 	standardLogger = logwrapper.NewLogger()
 )
 
-type dummyServer struct {
-	pb.UnimplementedDummyServiceServer
-}
-
-func (server *dummyServer) GetHello(ctx context.Context, request *emptypb.Empty) (*pb.GetHelloResponse, error) {
-	return &pb.GetHelloResponse{Rsp: "Hello world"}, nil
-}
-
 func main() {
 	var port string
 	if port = os.Getenv("PORT"); port == "" {
@@ -45,15 +37,15 @@ func main() {
 	standardLogger.ServiceStarting(serviceName)
 
 	grpcServer := grpc.NewServer()
-	pb.RegisterDummyServiceServer(grpcServer, &dummyServer{})
+	pb.RegisterDummyServiceServer(grpcServer, &dummySvc.DummyServer{})
 
 	dialOpts := []grpc.DialOption{grpc.WithInsecure()}
 
 	ctx := context.Background()
 	gatewayMux := runtime.NewServeMux()
-	error := pb.RegisterDummyServiceHandlerFromEndpoint(ctx, gatewayMux, fmt.Sprintf("%s:%s", host, port), dialOpts)
-	if error != nil {
-		standardLogger.ServiceHandlerRegisterFailed(serviceName, error.Error())
+	err := pb.RegisterDummyServiceHandlerFromEndpoint(ctx, gatewayMux, fmt.Sprintf("%s:%s", host, port), dialOpts)
+	if err != nil {
+		standardLogger.ServiceHandlerRegisterFailed(serviceName, err.Error())
 	}
 
 	httpMux := http.NewServeMux()
@@ -73,13 +65,13 @@ func main() {
 		Handler: h2c.NewHandler(httpHandler, http2Server),
 	}
 
-	conn, error := net.Listen("tcp", fmt.Sprintf("%s:%s", host, port))
-	if error != nil {
-		standardLogger.TcpConnectionStartFailed(serviceName, error.Error())
+	conn, err := net.Listen("tcp", fmt.Sprintf("%s:%s", host, port))
+	if err != nil {
+		standardLogger.TcpConnectionStartFailed(serviceName, err.Error())
 	}
 
-	error = http1Server.Serve(conn)
-	if error != nil {
-		standardLogger.HttpOneStartFailed(serviceName, error.Error())
+	err = http1Server.Serve(conn)
+	if err != nil {
+		standardLogger.HttpOneStartFailed(serviceName, err.Error())
 	}
 }

@@ -1,5 +1,6 @@
 {
     "editor.rulers": [120],
+    "editor.codeActionsOnSave": {},
     "[markdown]":  {
         "editor.wordWrap": "off",
     },
@@ -14,7 +15,14 @@
     },
     "go.goroot": "~/development/mono/bazel-mono/external/go_sdk",
     "go.toolsEnvVars": {
-      "GOPACKAGESDRIVER": "~/development/mono/tools/bash/gopackagesdriver.sh"
+        "GOPACKAGESDRIVER": "~/development/mono/tools/bash/gopackagesdriver.sh"
+    },
+    "go.enableCodeLens": {
+        "references": false,
+        "runtest": false
     },
     "go.useLanguageServer": true,
+    "go.buildOnSave": "off",
+    "go.lintOnSave": "off",
+    "go.vetOnSave": "off",
 }

@@ -9,10 +9,9 @@ import (
 	"strings"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	dummerSvc "github.com/veganafro/mono/golang/internal/dummer/v1"
 	"github.com/veganafro/mono/golang/internal/logwrapper"
 	pb "github.com/veganafro/mono/golang/pkg/dummer/v1"
-	dummy "github.com/veganafro/mono/golang/pkg/dummy/v1"
-	"google.golang.org/protobuf/types/known/emptypb"
 
 	"google.golang.org/grpc"
 
@@ -21,8 +20,6 @@ import (
 )
 
 const (
-	dummySvc    = "dummy"
-	dummyPort   = "8000"
 	host        = "localhost"
 	serviceName = "dummer"
 )
@@ -30,29 +27,6 @@ const (
 var (
 	standardLogger = logwrapper.NewLogger()
 )
-
-type dummerServer struct {
-	pb.UnimplementedDummerServiceServer
-}
-
-func (server *dummerServer) GetWorld(ctx context.Context, request *dummy.GetHelloRequest) (*dummy.GetHelloResponse, error) {
-	conn, error := grpc.DialContext(
-		context.Background(), fmt.Sprintf("%s:%s", host, dummyPort), grpc.WithInsecure())
-	if error != nil {
-		standardLogger.GrpcDialFailed(serviceName, dummySvc, error.Error())
-		return nil, error
-	}
-	defer conn.Close()
-
-	client := dummy.NewDummyServiceClient(conn)
-	response, error := client.GetHello(context.Background(), &emptypb.Empty{})
-	if error != nil {
-		standardLogger.GrpcRequestFailed(serviceName, dummySvc, "GetHello", error.Error())
-		return nil, error
-	}
-
-	return response, nil
-}
 
 func main() {
 	var port string
@@ -63,15 +37,15 @@ func main() {
 	standardLogger.ServiceStarting(serviceName)
 
 	grpcServer := grpc.NewServer()
-	pb.RegisterDummerServiceServer(grpcServer, &dummerServer{})
+	pb.RegisterDummerServiceServer(grpcServer, &dummerSvc.DummerServer{})
 
 	dialOpts := []grpc.DialOption{grpc.WithInsecure()}
 
 	ctx := context.Background()
 	gatewayMux := runtime.NewServeMux()
-	error := pb.RegisterDummerServiceHandlerFromEndpoint(ctx, gatewayMux, fmt.Sprintf("%s:%s", host, port), dialOpts)
-	if error != nil {
-		standardLogger.ServiceHandlerRegisterFailed(serviceName, error.Error())
+	err := pb.RegisterDummerServiceHandlerFromEndpoint(ctx, gatewayMux, fmt.Sprintf("%s:%s", host, port), dialOpts)
+	if err != nil {
+		standardLogger.ServiceHandlerRegisterFailed(serviceName, err.Error())
 	}
 
 	httpMux := http.NewServeMux()
@@ -91,13 +65,13 @@ func main() {
 		Handler: h2c.NewHandler(httpHandler, http2Server),
 	}
 
-	conn, error := net.Listen("tcp", fmt.Sprintf("%s:%s", host, port))
-	if error != nil {
-		standardLogger.TcpConnectionStartFailed(serviceName, error.Error())
+	conn, err := net.Listen("tcp", fmt.Sprintf("%s:%s", host, port))
+	if err != nil {
+		standardLogger.TcpConnectionStartFailed(serviceName, err.Error())
 	}
 
-	error = http1Server.Serve(conn)
-	if error != nil {
-		standardLogger.HttpOneStartFailed(serviceName, error.Error())
+	err = http1Server.Serve(conn)
+	if err != nil {
+		standardLogger.HttpOneStartFailed(serviceName, err.Error())
 	}
 }
