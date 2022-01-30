@@ -1,1 +1,1 @@
-jupyter_http_over_ws>=0.0.8
+vectorbt[full]==0.22.0
