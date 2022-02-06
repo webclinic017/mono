@@ -1,0 +1,10 @@
+load("//tools/starlark/jupyter:jupyter_bazel.bzl", "jupyter_py_binary")
+load("@py_deps//:requirements.bzl", "requirement")
+
+jupyter_py_binary(
+    name = "hello_world",
+    notebook = "hello_world.ipynb",
+    deps = [
+        requirement("vectorbt"),
+    ],
+)
