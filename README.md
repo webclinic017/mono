@@ -1,7 +1,8 @@
 # Summary
 
-Mono is meant to be a monorepo containing all the relevant information and source files needed to build a learning oriented Android and iOS app. These clients are
-supported by a gRPC based Go server. The client and backend communicate using Protocol Buffers sent over HTTP. Dive into each subdirectory to learn more.
+Mono is meant to be a monorepo containing all the relevant information and source files needed to build learning
+oriented Android and iOS apps. These clients are supported Golang servers that expose HTTP and gRPC endpoints. In both
+instances, the client and backend communicate using Protocol Buffers. Dive into each subdirectory to learn more.
 
 ## Getting started
 
@@ -9,40 +10,19 @@ supported by a gRPC based Go server. The client and backend communicate using Pr
 
 Start by installing [`brew`](https://brew.sh/) as shown in the linked instructions
 
-With the introduction of the [Bazel](https://bazel.build/) system, getting up and running is fairly simple. The first requirement
-is that `bazel` be installed like so:
+With the introduction of the [Bazel](https://bazel.build/) system, getting up and running is fairly simple. The first
+requirement is that [`bazelisk`](https://github.com/bazelbuild/bazelisk) be installed like so:
 
 ```
-$ brew install bazel@4.2.0
+$ brew install bazelisk
 ```
-Be sure to add the following line to `.bash_profile`:
+Be sure to add the following line to `.bash_profile` so that command line auto-completion for Bazel works:
 
 ```
 source $(brew --prefix)/etc/bash_completion.d/bazel-complete.bash
 ```
 Next, install [`docker`](https://docs.docker.com/docker-for-mac/install/) manually by following the linked steps.
 
-The third step is to install [`pyenv`](https://github.com/pyenv/pyenv) so that we can install and manage `python` versions. This
-is needed so that we can `pip install futures`, which is meant to fix [this](https://github.com/bazelbuild/bazel/issues/12741) error. 
-
-```
-$ brew install pyenv@1.2.21
-```
-Now add the following line to `.bash_profile`:
-
-```
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
-```
-Finally, we can set the python versions and packages we want with
-
-```
-$ pyenv install 3.9.0
-$ pyenv install 2.7.18
-$ pyenv global 3.9.0 2.7.18
-$ pip2 install futures
-```
 From here, use the editors and IDEs you're most comfortable with to make changes.
 
 ## Dependencies
@@ -67,19 +47,21 @@ From here, use the editors and IDEs you're most comfortable with to make changes
 | [org_golang_google_grpc](https://google.golang.org/grpc) | [1.41.0](https://github.com/grpc/grpc-go/releases/tag/v1.41.0) | N/A |
 | [org_golang_x_net](https://golang.org/x/net) | [0.0.0-20211108170745-6635138e15ea](https://pkg.go.dev/golang.org/x/net@v0.0.0-20211108170745-6635138e15ea) | N/A |
 | [org_golang_google_protobuf](https://google.golang.org/protobuf) | [1.27.1](https://pkg.go.dev/google.golang.org/protobuf@v1.27.1) | N/A |
-| [com_github_hashicorp_consul_api](https://github.com/hashicorp/consul/tree/main/api) | [1.11.0](https://pkg.go.dev/github.com/hashicorp/consul/api@v1.11.0) | N/A |
+| [com_github_hashicorp_consul_api](https://github.com/hashicorp/consul/tree/main/api) | [1.11.0](https://pkg.go.dev/github.com/hashicorp/consul/api@v1.11.0) | Currently unused |
 
 ### Helm
 
 | Name | Version | Notes |
 |------|---------|-------|
 | [consul](https://github.com/hashicorp/consul-k8s) | [0.34.1](https://github.com/hashicorp/consul-k8s/releases/tag/v0.34.1) | N/A |
+| [vault](https://github.com/hashicorp/vault-helm) | [0.18.0](https://github.com/hashicorp/vault-helm/releases/tag/v0.18.0) | N/A |
+| [cert-manager](https://github.com/cert-manager/cert-manager) | [1.6.1](https://github.com/cert-manager/cert-manager/releases/tag/v1.6.1) | N/A |
 
 ### Python (pip)
 
 | Name | Version | Notes |
 |------|---------|-------|
-| [jupyter_http_over_ws](https://github.com/googlecolab/jupyter_http_over_ws) | [0.0.8](https://github.com/googlecolab/jupyter_http_over_ws/releases/tag/v0.0.8) | N/A |
+| [vectorbt[full]](https://github.com/polakowo/vectorbt) | [0.22.0](https://pypi.org/project/vectorbt/0.22.0/) | N/A |
 
 ### Other
 
