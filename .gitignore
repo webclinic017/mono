@@ -18,3 +18,6 @@
 
 # Bazel generated output
 bazel-*
+
+# Python generated output
+**.egg-info

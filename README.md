@@ -16,11 +16,6 @@ requirement is that [`bazelisk`](https://github.com/bazelbuild/bazelisk) be inst
 ```
 $ brew install bazelisk
 ```
-Be sure to add the following line to `.bash_profile` so that command line auto-completion for Bazel works:
-
-```
-source $(brew --prefix)/etc/bash_completion.d/bazel-complete.bash
-```
 Next, install [`docker`](https://docs.docker.com/docker-for-mac/install/) manually by following the linked steps.
 
 From here, use the editors and IDEs you're most comfortable with to make changes.
@@ -69,6 +64,7 @@ From here, use the editors and IDEs you're most comfortable with to make changes
 |------|---------|-------|
 | [minikube](https://github.com/kubernetes/minikube) | [1.23.2](https://github.com/kubernetes/minikube/releases/tag/v1.23.2) | N/A |
 | [kubectl](https://github.com/kubernetes/kubernetes) | [1.22.2](https://github.com/kubernetes/kubernetes/releases/tag/v1.22.2) | N/A |
+| [ta-lib](https://ta-lib.org/) | [0.4.0](#) | Required to use the epynomous python module |
 
 ## License
 
