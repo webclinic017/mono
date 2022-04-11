@@ -11,3 +11,4 @@ authorization and connection encryption.
 ## Helpful notes
 
 [Consul k8s quickstart](https://learn.hashicorp.com/tutorials/consul/service-mesh-deploy)
+[Consul API gateway](https://learn.hashicorp.com/tutorials/consul/kubernetes-api-gateway)

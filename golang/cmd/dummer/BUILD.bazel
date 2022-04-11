@@ -2,9 +2,10 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image", "container_push")
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
+load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
 
 go_library(
-    name = "dummer_lib",
+    name = "dummer-lib",
     srcs = ["main.go"],
     importpath = "github.com/veganafro/mono/golang/cmd/dummer",
     visibility = ["//visibility:private"],
@@ -20,13 +21,13 @@ go_library(
 )
 
 go_binary(
-    name = "dummer",
-    embed = [":dummer_lib"],
+    name = "dummer-bin",
+    embed = [":dummer-lib"],
     visibility = ["//visibility:public"],
 )
 
 container_image(
-    name = "dummer_go_image_base",
+    name = "dummer-go-image-base",
     base = "@debian_base//image",
     env = {
         "PORT": "8001",
@@ -34,26 +35,68 @@ container_image(
 )
 
 go_image(
-    name = "dummer_go_image",
-    base = ":dummer_go_image_base",
-    embed = [":dummer_lib"],
+    name = "dummer-go-image",
+    base = ":dummer-go-image-base",
+    embed = [":dummer-lib"],
     visibility = ["//visibility:public"],
 )
 
 container_push(
-    name = "dummer_go_image_push",
+    name = "dummer-go-image-push",
     format = "OCI",
-    image = ":dummer_go_image",
+    image = ":dummer-go-image",
     registry = "index.docker.io",
     repository = "veganafro/dummer_image",
     tag = "dev",
 )
 
 k8s_object(
-    name = "dummer_all",
-    cluster = "minikube",
+    name = "dummer-namespace",
+    cluster = "$(CLUSTER)",
+    template = ":dummer-namespace.yaml",
+)
+
+k8s_object(
+    name = "dummer-serviceaccount",
+    cluster = "$(CLUSTER)",
+    template = ":dummer-serviceaccount.yaml",
+)
+
+k8s_object(
+    name = "dummer-service",
+    cluster = "$(CLUSTER)",
+    template = ":dummer-service.yaml",
+)
+
+k8s_object(
+    name = "dummer-deployment",
+    cluster = "$(CLUSTER)",
     images = {
-        "veganafro/dummer_image:dev": ":dummer_go_image",
+        "veganafro/dummer_image:dev": ":dummer-go-image",
     },
-    template = ":dummer-all.yaml",
+    template = ":dummer-deployment.yaml",
+)
+
+k8s_object(
+    name = "dummer-servicedefault",
+    cluster = "$(CLUSTER)",
+    template = ":dummer-servicedefault.yaml",
+)
+
+k8s_object(
+    name = "dummer-ingress",
+    cluster = "$(CLUSTER)",
+    template = ":dummer-ingress.yaml",
+)
+
+k8s_objects(
+    name = "dummer-all",
+    objects = [
+        ":dummer-namespace",
+        ":dummer-serviceaccount",
+        ":dummer-service",
+        ":dummer-deployment",
+        ":dummer-servicedefault",
+        ":dummer-ingress",
+    ],
 )

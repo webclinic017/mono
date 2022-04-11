@@ -1,0 +1,30 @@
+load("//tools/starlark/helm:helm_template.bzl", "helm_template")
+load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
+load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
+
+helm_template(
+    name = "nginx-ingress",
+    chart_tar = "@nginx-ingress//:chart.tgz",
+    namespace = "nginx-ingress",
+    values_yaml_file = ":nginx-ingress-values.yaml",
+)
+
+k8s_object(
+    name = "nginx-ingress-namespace",
+    cluster = "$(CLUSTER)",
+    template = ":nginx-ingress-namespace.yaml",
+)
+
+k8s_object(
+    name = "nginx-ingress-object",
+    cluster = "$(CLUSTER)",
+    template = ":nginx-ingress",
+)
+
+k8s_objects(
+    name = "nginx-ingress-all",
+    objects = [
+        ":nginx-ingress-namespace",
+        ":nginx-ingress-object",
+    ],
+)

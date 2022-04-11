@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dummer-ingress
+  namespace: dummer
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: acme-clusterissuer
+spec:
+  tls:
+    - hosts:
+      - fjarm.xyz
+      secretName: acme-certificate
+  rules:
+  - host: "fjarm.xyz"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/world"
+        backend:
+          service:
+            name: dummer
+            port:
+              number: 8001

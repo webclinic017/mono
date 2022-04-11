@@ -21,7 +21,7 @@
         "references": false,
         "runtest": false
     },
-    "go.useLanguageServer": true,
+    "go.useLanguageServer": false,
     "go.buildOnSave": "off",
     "go.lintOnSave": "off",
     "go.vetOnSave": "off",

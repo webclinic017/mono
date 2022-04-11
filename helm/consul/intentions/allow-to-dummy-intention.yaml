@@ -1,10 +1,13 @@
 apiVersion: consul.hashicorp.com/v1alpha1
 kind: ServiceIntentions
 metadata:
-  name: dummer-to-dummy
+  name: allow-to-dummy-intention
+  namespace: consul
 spec:
   destination:
     name: dummy
   sources:
     - name: dummer
+      action: allow
+    - name: nginx-ingress-ingress-nginx-controller
       action: allow

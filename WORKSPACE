@@ -22,7 +22,7 @@ helm_tool(
     version = HEML_TOOL_VERSION,
 )
 
-CONSUL_CHART_VERSION = "0.34.1"
+CONSUL_CHART_VERSION = "0.41.1"
 
 helm_chart(
     name = "consul",
@@ -32,7 +32,7 @@ helm_chart(
     version = CONSUL_CHART_VERSION,
 )
 
-VAULT_CHART_VERSION = "0.18.0"
+VAULT_CHART_VERSION = "0.19.0"
 
 helm_chart(
     name = "vault",
@@ -50,6 +50,16 @@ helm_chart(
     chartname = "cert-manager",
     repo_url = "https://charts.jetstack.io",
     version = CERT_MANAGER_VERSION,
+)
+
+NGINX_INGRESS_VERSION = "v4.0.19"
+
+helm_chart(
+    name = "nginx-ingress",
+    reponame = "ingress-nginx",
+    chartname = "ingress-nginx",
+    repo_url = "https://kubernetes.github.io/ingress-nginx",
+    version = NGINX_INGRESS_VERSION,
 )
 
 ## End helm ##
@@ -121,8 +131,8 @@ rules_proto_toolchains()
 
 ## Begin io_bazel_rules_go - 05/13 ##
 
-RULES_GO_SHA = "2b1641428dff9018f9e85c0384f03ec6c10660d935b750e3fa1492a281a53b0f"
-RULES_GO_VERSION = "0.29.0"
+RULES_GO_SHA = "d6b2513456fe2229811da7eb67a444be7785f5323c6708b38d851d2b51e54d83"
+RULES_GO_VERSION = "0.30.0"
 
 http_archive(
     name = "io_bazel_rules_go",
@@ -158,28 +168,24 @@ http_archive(
 )
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-
 go_rules_dependencies()
-go_register_toolchains(version = "1.17.1")
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-
-gazelle_dependencies()
-
 load("//golang:repositories.bzl", "go_deps")
 
 go_deps()
+go_register_toolchains(version = "1.17.7")
+gazelle_dependencies()
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
-
 protobuf_deps()
 
 ## End bazel_gazelle ##
 
 ## Begin grpc-gateway - 05/13 ##
 
-GRPC_GATEWAY_V2_SHA = "4a1a50fcb2dafb0134db0be669d3d8d8dd0d6933f88a3e580fee2727ccf5ebc2"
-GRPC_GATEWAY_V2_VERSION = "2.6.0"
+GRPC_GATEWAY_V2_SHA = "c405cd8f1fb54761933c20be2ad02cce4f9a498d7bdb92a5d3789704884b8360"
+GRPC_GATEWAY_V2_VERSION = "2.7.3"
 
 http_archive(
     name = "com_github_grpc_ecosystem_grpc_gateway_v2",

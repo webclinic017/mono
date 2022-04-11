@@ -6,41 +6,53 @@ helm_template(
     name = "cert-manager",
     chart_tar = "@cert-manager//:chart.tgz",
     namespace = "cert-manager",
-    values = {
-        "installCRDs": "true",
-    },
+    values_yaml_file = ":cert-manager-values.yaml",
 )
 
 k8s_object(
     name = "cert-manager-namespace",
-    cluster = "minikube",
+    cluster = "$(CLUSTER)",
     template = ":cert-manager-namespace.yaml",
 )
 
 k8s_object(
     name = "cert-manager-ca-secret",
-    cluster = "minikube",
+    cluster = "$(CLUSTER)",
     resolver = "//golang/internal/certs:certs",
     template = ":cert-manager-ca-secret.yaml",
 )
 
 k8s_object(
     name = "cert-manager-object",
-    cluster = "minikube",
+    cluster = "$(CLUSTER)",
     template = ":cert-manager",
 )
 
 k8s_object(
-    name = "cert-manager-clusterissuer",
-    cluster = "minikube",
+    name = "cert-manager-clusterissuer-internal",
+    cluster = "$(CLUSTER)",
     template = ":cert-manager-ca-clusterissuer.yaml",
 )
 
+k8s_object(
+    name = "cert-manager-clusterissuer-external",
+    cluster = "$(CLUSTER)",
+    template = ":cert-manager-acme-clusterissuer.yaml",
+)
+
 k8s_objects(
-    name = "cert-manager-bootstrap",
+    name = "cert-manager-all",
     objects = [
         ":cert-manager-namespace",
-        ":cert-manager-ca-secret",
         ":cert-manager-object",
+    ],
+)
+
+k8s_objects(
+    name = "cert-manager-clusterissuers",
+    objects = [
+        ":cert-manager-ca-secret",
+        ":cert-manager-clusterissuer-internal",
+        ":cert-manager-clusterissuer-external",
     ],
 )

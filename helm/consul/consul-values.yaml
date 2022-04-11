@@ -1,6 +1,6 @@
 global:
   name: consul
-  datacenter: mono-dc01
+  datacenter: fjarm-nyc3-cluster
   # By setting `manageSystemACLs` to true, the ACL system
   # will configure itself. You do not need to take any
   # action beyond setting the value in the config file.
@@ -24,6 +24,9 @@ global:
     # authenticity of servers and clients.
     verify: true
     httpsOnly: true
+  enablePodSecurityPolicies: false
+  metrics:
+    enabled: false
 server:
   enabled: true
   # TODO For production deployments, the replica count should be 3 to 5
@@ -31,18 +34,24 @@ server:
   securityContext:
     runAsNonRoot: false
     runAsUser: 0
+  resources:
+    limits:
+      memory: '4Gi'
+      cpu: '1'
   extraConfig: |
     {
       "limits": {
         "http_max_conns_per_client": 500
       },
-      "log_level": "DEBUG"
+      "log_level": "WARN"
     }
 ui:
-  enabled: true
-  service:
-    type: "NodePort"
+  enabled: false
 client:
+  resources:
+    limits:
+      memory: '4Gi'
+      cpu: '1'
   extraConfig: |
     {
       "advertise_reconnect_timeout": "15m"
@@ -50,6 +59,11 @@ client:
   grpc: true
 connectInject:
   enabled: true
-  logLevel: "debug"
+  default: false
+  logLevel: "warn"
 controller:
   enabled: true
+prometheus:
+  enabled: false
+tests:
+  enabled: false

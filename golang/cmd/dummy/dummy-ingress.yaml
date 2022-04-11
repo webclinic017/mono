@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dummy-ingress
+  namespace: dummy
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: acme-clusterissuer
+spec:
+  tls:
+    - hosts:
+      - fjarm.xyz
+      secretName: acme-certificate
+  rules:
+  - host: "fjarm.xyz"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/hello"
+        backend:
+          service:
+            name: dummy
+            port:
+              number: 8000

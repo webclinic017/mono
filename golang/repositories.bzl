@@ -9,12 +9,11 @@ def go_deps():
     """
     ## Begin gRPC dependecies - 05/13 ##
 
-    GRPC_SUM = "h1:f+PlOh7QV4iIJkPrx5NQ7qaNGFQ3OTse67yaDHfju4E="
-    GRPC_VERSION = "v1.41.0"
+    GRPC_SUM = "h1:weqSxi/TMs1SqFRMHCtBgXRs8k3X39QIDEZ0pRcttUg="
+    GRPC_VERSION = "v1.44.0"
 
     go_repository(
         name = "org_golang_google_grpc",
-        build_file_proto_mode = "disable",
         importpath = "google.golang.org/grpc",
         sum = "%s" % GRPC_SUM,
         version = "%s" % GRPC_VERSION,

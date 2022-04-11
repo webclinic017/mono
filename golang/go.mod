@@ -6,7 +6,7 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.6.0
 	github.com/hashicorp/consul/api v1.11.0
 	golang.org/x/net v0.0.0-20211020060615-d418f374d309
-	google.golang.org/grpc v1.41.0
+	google.golang.org/grpc v1.44.0
 	google.golang.org/protobuf v1.27.1
 )
 

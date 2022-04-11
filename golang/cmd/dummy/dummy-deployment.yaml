@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dummy
+  name: dummy
+  namespace: dummy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dummy
+  template:
+    metadata:
+      labels:
+        app: dummy
+      annotations:
+        consul.hashicorp.com/connect-inject: "true"
+    spec:
+      serviceAccountName: dummy
+      containers:
+      - name: dummy
+        image: veganafro/dummy_image:dev
+        ports:
+        - containerPort: 8000
+        readinessProbe:
+          httpGet:
+            path: /hello
+            port: 8000
+          initialDelaySeconds: 10
+        resources:
+          limits:
+            memory: 8Mi
+            cpu: "0.25"

@@ -5,8 +5,12 @@ metadata:
   namespace: cert-manager
 spec:
   acme:
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
-    email: "jmuhia80@gmail.com"
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: "jeremy@fjarm.xyz"
     privateKeySecretRef:
-      name: acme-clusterissuer
-    http01: {}
+      name: acme-clusterissuer-secret
+    solvers:
+    # SEE: https://cert-manager.io/docs/configuration/acme/http01/#configuring-the-http01-ingress-solver
+    - http01:
+        ingress:
+          class: nginx
