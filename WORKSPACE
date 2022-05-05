@@ -5,9 +5,7 @@
 # gazelle:reposiroty go_repository name=com_github_armon_go_metrics importpath=github.com/circonus-labs/circonus-gometrics
 # gazelle:repository_macro golang/repositories.bzl%go_deps
 
-workspace(
-    name = "veganafro_mono",
-)
+workspace(name = "com_github_veganafro_mono")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
@@ -80,14 +78,10 @@ http_archive(
     ],
 )
 
-load("@rules_python//python:pip.bzl", "pip_install")
-
 # Create a central external repo, @my_deps, that contains Bazel targets for all the
 # third-party packages specified in the requirements.txt file.
-pip_install(
-   name = "py_deps",
-   requirements = "//python:requirements.txt",
-)
+load("@rules_python//python:pip.bzl", "pip_install")
+pip_install(name = "py_deps", requirements = "//python:requirements.txt")
 
 ## End rules_python - 05/13 ##
 
@@ -123,7 +117,6 @@ http_archive(
 )
 
 load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
-
 rules_proto_dependencies()
 rules_proto_toolchains()
 
@@ -197,7 +190,6 @@ http_archive(
 )
 
 load("@com_github_grpc_ecosystem_grpc_gateway_v2//:repositories.bzl", "go_repositories")
-
 go_repositories()
 
 ## End grpc-gateway ##
@@ -219,19 +211,15 @@ http_archive(
 )
 
 load("@io_bazel_rules_docker//repositories:repositories.bzl", container_repositories = "repositories")
-
 container_repositories()
 
 load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
-
 container_deps()
 
 load("@io_bazel_rules_docker//go:image.bzl", _go_image_repos = "repositories")
-
 _go_image_repos()
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
-
 container_pull(
   name = "debian_base",
   registry = "gcr.io",
@@ -259,11 +247,58 @@ http_archive(
 )
 
 load("@io_bazel_rules_k8s//k8s:k8s.bzl", "k8s_repositories")
-
 k8s_repositories()
 
 load("@io_bazel_rules_k8s//k8s:k8s_go_deps.bzl", k8s_go_deps = "deps")
-
 k8s_go_deps()
 
 ## End rules_k8s 07/01 ##
+
+## Begin iOS ##
+
+RULES_APPLE_SHA = "4161b2283f80f33b93579627c3bd846169b2d58848b0ffb29b5d4db35263156a"
+RULES_APPLE_VERSION = "0.34.0"
+
+http_archive(
+    name = "build_bazel_rules_apple",
+    sha256 = RULES_APPLE_SHA,
+    url = "https://github.com/bazelbuild/rules_apple/releases/download/{}/rules_apple.{}.tar.gz".format(
+        RULES_APPLE_VERSION, RULES_APPLE_VERSION
+    ),
+)
+
+load("@build_bazel_rules_apple//apple:repositories.bzl", "apple_rules_dependencies")
+apple_rules_dependencies()
+
+RULES_SWIFT_SHA = "a2fd565e527f83fb3f9eb07eb9737240e668c9242d3bc318712efa54a7deda97"
+RULES_SWIFT_VERSION = "0.27.0"
+
+http_archive(
+    name = "build_bazel_rules_swift",
+    sha256 = RULES_SWIFT_SHA,
+    url = "https://github.com/bazelbuild/rules_swift/releases/download/{}/rules_swift.{}.tar.gz".format(
+        RULES_SWIFT_VERSION, RULES_SWIFT_VERSION
+    ),
+)
+
+load("@build_bazel_rules_swift//swift:repositories.bzl", "swift_rules_dependencies")
+swift_rules_dependencies()
+
+load("@build_bazel_rules_swift//swift:extras.bzl", "swift_rules_extra_dependencies")
+swift_rules_extra_dependencies()
+
+APPLE_SUPPORT_SHA = "5bbce1b2b9a3d4b03c0697687023ef5471578e76f994363c641c5f50ff0c7268"
+APPLE_SUPPORT_VERSION = "0.13.0"
+
+http_archive(
+    name = "build_bazel_apple_support",
+    sha256 = APPLE_SUPPORT_SHA,
+    url = "https://github.com/bazelbuild/apple_support/releases/download/{}/apple_support.{}.tar.gz".format(
+        APPLE_SUPPORT_VERSION, APPLE_SUPPORT_VERSION
+    ),
+)
+
+load("@build_bazel_apple_support//lib:repositories.bzl", "apple_support_dependencies")
+apple_support_dependencies()
+
+## End iOS ##
