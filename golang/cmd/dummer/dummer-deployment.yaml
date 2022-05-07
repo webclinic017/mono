@@ -17,6 +17,7 @@ spec:
       annotations:
         consul.hashicorp.com/connect-inject: "true"
         consul.hashicorp.com/connect-service-upstreams: "dummy:8000"
+        consul.hashicorp.com/transparent-proxy: "true"
     spec:
       serviceAccountName: dummer
       containers:

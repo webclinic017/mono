@@ -16,6 +16,7 @@ spec:
         app: dummy
       annotations:
         consul.hashicorp.com/connect-inject: "true"
+        consul.hashicorp.com/transparent-proxy: "true"
     spec:
       serviceAccountName: dummy
       containers:
