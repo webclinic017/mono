@@ -26,19 +26,19 @@ From here, use the editors and IDEs you're most comfortable with to make changes
 
 | Name | Version | Notes |
 |------|---------|-------|
-| [rules_python](https://github.com/bazelbuild/rules_python) | [0.3.0](https://github.com/bazelbuild/rules_python/releases/tag/0.3.0) | N/A |
-| [com_google_protobuf](https://github.com/protocolbuffers/protobuf) | [3.18.0](https://github.com/protocolbuffers/protobuf/releases/tag/v3.18.0) | N/A |
-| [rules_proto](https://github.com/bazelbuild/rules_proto) | [4.0.0](https://github.com/bazelbuild/rules_proto/releases/tag/4.0.0) | N/A |
+| [rules_python](https://github.com/bazelbuild/rules_python) | [0.8.1](https://github.com/bazelbuild/rules_python/releases/tag/0.8.1) | N/A |
+| [com_google_protobuf](https://github.com/protocolbuffers/protobuf) | [3.19.4](https://github.com/protocolbuffers/protobuf/releases/tag/v3.19.4) | N/A |
+| [rules_proto](https://github.com/bazelbuild/rules_proto) | [4.0.0-3.19.2-2](https://github.com/bazelbuild/rules_proto/releases/tag/4.0.0-3.19.2-2) | N/A |
 | [io_bazel_rules_go](https://github.com/bazelbuild/rules_go) | [0.30.0](https://github.com/bazelbuild/rules_go/releases/tag/v0.30.0) | N/A |
 | [bazel_gazelle](https://github.com/bazelbuild/bazel-gazelle) | [0.24.0](https://github.com/bazelbuild/bazel-gazelle/releases/tag/v0.22.3) | N/A |
-| [io_bazel_rules_docker](https://github.com/bazelbuild/rules_docker) | [0.17.0](https://github.com/bazelbuild/rules_docker/releases/tag/v0.17.0)  | N/A |
-| [io_bazel_rules_k8s](https://github.com/bazelbuild/rules_k8s) | [0.5](https://github.com/bazelbuild/rules_k8s/releases/tag/v0.5) | N/A |
+| [io_bazel_rules_docker](https://github.com/bazelbuild/rules_docker) | [0.24.0](https://github.com/bazelbuild/rules_docker/releases/tag/v0.24.0)  | N/A |
+| [io_bazel_rules_k8s](https://github.com/bazelbuild/rules_k8s) | [0.6](https://github.com/bazelbuild/rules_k8s/releases/tag/v0.6) | N/A |
 
 ### Golang
 
 | Name | Version | Notes |
 |------|---------|-------|
-| [grpc_gateway](https://github.com/grpc-ecosystem/grpc-gateway) | [2.7.3](https://github.com/grpc-ecosystem/grpc-gateway/releases/tag/v2.7.3) | N/A |
+| [grpc_gateway](https://github.com/grpc-ecosystem/grpc-gateway) | [2.10.0](https://github.com/grpc-ecosystem/grpc-gateway/releases/tag/v2.10.0) | N/A |
 | [org_golang_google_grpc](https://google.golang.org/grpc) | [1.44.0](https://github.com/grpc/grpc-go/releases/tag/v1.44.0) | N/A |
 | [org_golang_x_net](https://golang.org/x/net) | [0.0.0-20211108170745-6635138e15ea](https://pkg.go.dev/golang.org/x/net@v0.0.0-20211108170745-6635138e15ea) | N/A |
 | [org_golang_google_protobuf](https://google.golang.org/protobuf) | [1.27.1](https://pkg.go.dev/google.golang.org/protobuf@v1.27.1) | N/A |

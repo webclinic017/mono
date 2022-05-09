@@ -38,6 +38,9 @@ go_image(
     name = "dummy-go-image",
     base = ":dummy-go-image-base",
     embed = [":dummy-lib"],
+    # SEE: https://github.com/bazelbuild/bazel/issues/10134#issuecomment-1079880746
+    goos = "linux",
+    goarch = "amd64",
     visibility = ["//visibility:public"],
 )
 

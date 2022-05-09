@@ -1,91 +1,53 @@
 """
-`go_deps` loads all the relevant Go dependencies for gRPC and grpc-gateway
+Dependencies that are needed for golang tests and tools.
 """
-load("@bazel_gazelle//:deps.bzl", "go_repository")
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def go_deps():
     """
-    `go_deps` loads all the relevant Go dependencies for gRPC and grpc-gateway
+    Fetches all required dependencies for proto tests and tools.
     """
-    ## Begin gRPC dependecies - 05/13 ##
+    RULES_GO_SHA = "d6b2513456fe2229811da7eb67a444be7785f5323c6708b38d851d2b51e54d83"
+    RULES_GO_VERSION = "0.30.0"
 
-    GRPC_SUM = "h1:weqSxi/TMs1SqFRMHCtBgXRs8k3X39QIDEZ0pRcttUg="
-    GRPC_VERSION = "v1.44.0"
-
-    go_repository(
-        name = "org_golang_google_grpc",
-        importpath = "google.golang.org/grpc",
-        sum = "%s" % GRPC_SUM,
-        version = "%s" % GRPC_VERSION,
+    http_archive(
+        name = "io_bazel_rules_go",
+        sha256 = RULES_GO_SHA,
+        urls = [
+            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v{}/rules_go-v{}.zip".format(
+                RULES_GO_VERSION, RULES_GO_VERSION
+            ),
+            "https://github.com/bazelbuild/rules_go/releases/download/v{}/rules_go-v{}.zip".format(
+                RULES_GO_VERSION, RULES_GO_VERSION
+            ),
+        ],
     )
 
-    NET_SUM = "h1:FosBMXtOc8Tp9Hbo4ltl1WJSrTVewZU8MPnTPY2HdH8="
-    NET_VERSION = "v0.0.0-20211108170745-6635138e15ea"
+    BAZEL_GAZELLE_SHA = "de69a09dc70417580aabf20a28619bb3ef60d038470c7cf8442fafcf627c21cb"
+    BAZEL_GAZELLE_VERSION = "0.24.0"
 
-    go_repository(
-        name = "org_golang_x_net",
-        importpath = "golang.org/x/net",
-        sum = "%s" % NET_SUM,
-        version = "%s" % NET_VERSION,
+    http_archive(
+        name = "bazel_gazelle",
+        sha256 = BAZEL_GAZELLE_SHA,
+        urls = [
+            "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v{}/bazel-gazelle-v{}.tar.gz".format(
+                BAZEL_GAZELLE_VERSION, BAZEL_GAZELLE_VERSION
+            ),
+            "https://github.com/bazelbuild/bazel-gazelle/releases/download/v{}/bazel-gazelle-v{}.tar.gz".format(
+                BAZEL_GAZELLE_VERSION, BAZEL_GAZELLE_VERSION
+            ),
+        ],
     )
 
-    ## End gRPC dependencies ##
+    GRPC_GATEWAY_V2_SHA = "d7136b4ced1d8b270144953c610635ebc6cdf017863171829ed5bf8c0e8800d7"
+    GRPC_GATEWAY_V2_VERSION = "2.10.0"
 
-    ## Begin grpc-gateway dependencies - 05/13 ##
-
-    YAML_V2_SUM = "h1:clyUAQHOM3G0M3f5vQj7LuJrETvjVot3Z5el9nffUtU="
-    YAML_V2_VERSION = "v2.3.0"
-
-    go_repository(
-        name = "in_gopkg_yaml_v2",
-        importpath = "gopkg.in/yaml.v2",
-        sum = "%s" % YAML_V2_SUM,
-        version = "%s" % YAML_V2_VERSION,
+    http_archive(
+        name = "com_github_grpc_ecosystem_grpc_gateway_v2",
+        sha256 = GRPC_GATEWAY_V2_SHA,
+        strip_prefix = "grpc-gateway-%s" % GRPC_GATEWAY_V2_VERSION,
+        urls = [
+            "https://github.com/grpc-ecosystem/grpc-gateway/archive/v%s.tar.gz" % GRPC_GATEWAY_V2_VERSION
+        ],
     )
-
-    PROTOBUF_SUM = "h1:9q0QmTI4eRPtz6boOQmLYwt+qCgq0jsYwAQnmE0givc="
-    PROTOBUF_VERSION = "v1.27.1"
-
-    go_repository(
-        name = "org_golang_google_protobuf",
-        importpath = "google.golang.org/protobuf",
-        sum = "%s" % PROTOBUF_SUM,
-        version = "%s" % PROTOBUF_VERSION,
-    )
-
-    ## End grpc-gateway dependencies ##
-
-    ## Begin consul dependencies ##
-
-    HC_LOG_SUM = "h1:bkKf0BeBXcSYa7f5Fyi9gMuQ8gNsxeiNpZjR6VxNZeo="
-    HC_LOG_VERSION = "v1.0.0"
-
-    go_repository(
-        name = "com_github_hashicorp_go_hclog",
-        importpath = "github.com/hashicorp/go-hclog",
-        sum = "%s" % HC_LOG_SUM,
-        version = "%s" % HC_LOG_VERSION,
-    )
-
-    ROOT_CERTS_SUM = "h1:jzhAVGtqPKbwpyCPELlgNWhE1znq+qwJtW5Oi2viEzc="
-    ROOT_CERTS_VERSION = "v1.0.2"
-
-    go_repository(
-        name = "com_github_hashicorp_go_rootcerts",
-        importpath = "github.com/hashicorp/go-rootcerts",
-        sum = "%s" % ROOT_CERTS_SUM,
-        version = "%s" % ROOT_CERTS_VERSION,
-    )
-
-    CONSUL_SUM = "h1:Hw/G8TtRvOElqxVIhBzXciiSTbapq8hZ2XKZsXk5ZCE="
-    CONSUL_VERSION = "v1.11.0"
-
-    go_repository(
-        name = "com_github_hashicorp_consul_api",
-        build_external = "external",
-        importpath = "github.com/hashicorp/consul/api",
-        sum = "%s" % CONSUL_SUM,
-        version = "%s" % CONSUL_VERSION,
-    )
-
-    ## End consul dependencies ##
