@@ -1,24 +1,73 @@
 # Summary
 
-Mono is meant to be a monorepo containing all the relevant information and source files needed to build learning
-oriented Android and iOS apps. These clients are supported Golang servers that expose HTTP and gRPC endpoints. In both
-instances, the client and backend communicate using Protocol Buffers. Dive into each subdirectory to learn more.
+`mono` contains source files for an iOS app that can fetch and display fundamental analysis reports for a given
+security. It's currently under development and not ready for production deployment.
 
-## Getting started
+At a high level, the iOS app is built using standard tools like XCode and SwiftUI with the help of some libraries like
+`SwiftProtobuf`, `RxSwift`, and `Moya`. The client sends and receives Protocol Buffers over HTTP to a server running on
+a Kubernetes cluster.
 
-### Setting up a dev environment
+Using `grpc-gateway`, the server listens to gRPC and HTTP requests on the same port and sometimes responds with a
+Protocol Buffer. The rest of this document will dive deeper into how each part of this flow works and how to get started
+hacking on each part of the stack.
 
-Start by installing [`brew`](https://brew.sh/) as shown in the linked instructions
+## General setup
 
-With the introduction of the [Bazel](https://bazel.build/) system, getting up and running is fairly simple. The first
-requirement is that [`bazelisk`](https://github.com/bazelbuild/bazelisk) be installed like so:
+Every developer should install the following tools manually:
 
-```
+1. `brew`
+1. `docker`
+1. `pyenv`
+1. `kubectl`
+1. `minikube`
+1. `bazelisk`
+1. `ta-lib`
+1. `virtualenv`
+
+Start with the tools that won't be installed by a package manager: `brew` and `docker`. Instructions to install `brew`
+can be found [here](https://brew.sh/). Instructions to install `docker` can be found [here](https://docs.docker.com/docker-for-mac/install/).
+
+For context, `brew` will manage the required packages that will be installed later and the backend services run inside
+containers, which is why `docker` must be installed among other reasons.
+
+The next few tools can be installed with `brew` from the command line:
+
+```bash
+$ brew install pyenv
+$ brew install kubectl
+$ brew install minikube
 $ brew install bazelisk
+$ brew install ta-lib
 ```
-Next, install [`docker`](https://docs.docker.com/docker-for-mac/install/) manually by following the linked steps.
 
-From here, use the editors and IDEs you're most comfortable with to make changes.
+Notice that `virtualenv` is installed by `pip`, not `brew`. Setup a `python` environment by first adding these lines to
+either `.bash_profile` or `.bashrc`:
+
+```bash
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+fi
+```
+
+Both lines are needed because of [this](https://stackoverflow.com/questions/68733068/pyenv-global-does-not-seem-to-work-with-pyenv-2-0-4) bug.
+
+Now `python3` versions can be managed with `pyenv` like so:
+
+```bash
+$ pyenv install 3.9.11
+$ pyenv global 3.9.11
+```
+
+Finally, after refreshing the terminal, install and use `virtualenv` with:
+
+```bash
+$ pip3 install virtualenv
+$ cd mono/python
+$ virtualenv venv
+```
+
+If `brew` installed any `python` formulas direclty like `python@3.X`, uninstall them.
 
 ## Dependencies
 
@@ -71,4 +120,4 @@ From here, use the editors and IDEs you're most comfortable with to make changes
 
 ## License
 
-Mono is available under the MIT license. See the `LICENSE` file for details.
+mono is available under the MIT license. See the `LICENSE` file for details.
