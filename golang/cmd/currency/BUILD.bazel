@@ -1,0 +1,23 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "currency-lib",
+    srcs = ["main.go"],
+    importpath = "github.com/veganafro/mono/golang/cmd/currency",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//golang/internal/currency/v1:currency_service",
+        "//golang/internal/logwrapper:logwrapper",
+        "//golang/pkg/currency/v1:currency",
+        "@com_github_grpc_ecosystem_grpc_gateway_v2//runtime:go_default_library",
+        "@org_golang_google_grpc//:go_default_library",
+        "@org_golang_x_net//http2",
+        "@org_golang_x_net//http2/h2c",
+    ],
+)
+
+go_binary(
+    name = "currency-bin",
+    embed = [":currency-lib"],
+    visibility = ["//visibility:public"],
+)

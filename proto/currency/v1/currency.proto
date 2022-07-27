@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package currency.v1;
+
+option go_package = "github.com/veganafro/mono/server/pkg/currency/v1";
+
+enum Status {
+    STATUS_UNSPECIFIED = 0;
+    STATUS_SUCCESS = 1;
+    STATUS_FAILED = 2;
+}
+
+// List the currencies a user can transact
+
+message GetUserCurrenciesRequest {
+    string user_id = 1;
+}
+
+message GetUserCurrenciesResponse {
+    Status status = 1;
+    repeated string currency_name = 2;
+}
+
+// Buy a selected currency for a user
+
+message BuyUserCurrencyRequest {
+    string user_id = 1;
+    string currency_id = 2;
+}
+
+message BuyUserCurrencyResponse {
+    Status status = 1;
+    int32 balance = 2;
+}
+
+// Sell a selected currency for a user
+
+message SellUserCurrencyRequest {
+    string user_id = 1;
+    string currency_id = 2;
+}
+
+message SellUserCurrencyResponse {
+    Status status = 1;
+    int32 balance = 2;
+}
+
+// List the balance for each currency a user can transact
+
+message GetUserBalancesRequest {
+    string user_id = 1;
+}
+
+message GetUserBalancesResponse {
+    Status status = 1;
+    map<string, int32> balances = 2;
+}

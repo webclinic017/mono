@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package currency.v1;
+
+option go_package = "github.com/veganafro/mono/server/pkg/currency/v1";
+
+import "google/api/annotations.proto";
+import "proto/currency/v1/currency.proto";
+
+service CurrencyService {
+    rpc GetUserCurrencies(currency.v1.GetUserCurrenciesRequest) returns (currency.v1.GetUserCurrenciesResponse) {
+        option(google.api.http) = {
+            post: "/user_currencies"
+            body: "*"
+        };
+    }
+
+    rpc BuyUserCurrency(currency.v1.BuyUserCurrencyRequest) returns (currency.v1.BuyUserCurrencyResponse) {
+        option(google.api.http) = {
+            post: "/buy"
+            body: "*"
+        };
+    }
+
+    rpc SellUserCurrency(currency.v1.SellUserCurrencyRequest) returns (currency.v1.SellUserCurrencyResponse) {
+        option(google.api.http) = {
+            post: "/sell"
+            body: "*"
+        };
+    }
+
+    rpc GetUserBalances(currency.v1.GetUserBalancesRequest) returns (currency.v1.GetUserBalancesResponse) {
+        option(google.api.http) = {
+            post: "/user_balances"
+            body: "*"
+        };
+    }
+}

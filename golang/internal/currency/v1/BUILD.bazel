@@ -1,0 +1,55 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "currency_service",
+    srcs = [
+        "currency_service.go",
+    ],
+    embed = [
+        ":currency_repo",
+    ],
+    importpath = "github.com/veganafro/mono/golang/internal/currency/v1",
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "//golang/internal/logwrapper:logwrapper",
+        "//golang/pkg/currency/v1:currency",
+        "@org_golang_google_grpc//:go_default_library",
+    ],
+)
+
+go_library(
+    name = "currency_repo",
+    srcs = [
+        "currency_repo.go",
+    ],
+    importpath = "github.com/veganafro/mono/golang/internal/currency/v1",
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "@io_gorm_driver_postgres//:go_default_library",
+        "@io_gorm_gorm//:go_default_library",
+        "@com_github_cockroachdb_cockroach_go_v2//crdb/crdbgorm:go_default_library",
+    ],
+)
+
+go_test(
+    name = "currency_test",
+    srcs = [
+        "currency_service_test.go",
+    ],
+    embed = [
+        ":currency",
+    ],
+    importpath = "github.com/veganafro/mono/golang/internal/currency/v1",
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "//golang/pkg/currency/v1:currency",
+        "@org_golang_google_grpc//:go_default_library",
+        "@org_golang_google_grpc//test/bufconn:go_default_library",
+    ],
+)

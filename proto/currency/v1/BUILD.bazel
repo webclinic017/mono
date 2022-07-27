@@ -1,9 +1,9 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
 proto_library(
-    name = "dummest_v1_proto",
+    name = "currency_v1",
     srcs = [
-        "dummest.proto",
+        "currency.proto",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -11,14 +11,13 @@ proto_library(
 )
 
 proto_library(
-    name = "dummest_service_v1_proto",
+    name = "currency_service_v1",
     srcs = [
-        "dummest_service.proto",
+        "currency_service.proto",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":dummest_v1_proto",
-        "@com_google_protobuf//:empty_proto",
+        ":currency_v1",
         "@go_googleapis//google/api:annotations_proto",
     ],
 )
