@@ -3,8 +3,7 @@
 build/
 
 ## Various settings
-mono.xcodeproj/xcuserdata/
-mono.xcodeproj/project.xcworkspace/xcuserdata/
+mono.xcodeproj
 
 ## Other
 **.moved-aside

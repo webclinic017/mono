@@ -1,0 +1,70 @@
+name: mono
+options:
+  minimumXcodeGenVersion: 2.29.0
+  developmentLanguage: en
+  bundleIdPrefix: xyz.fjarm
+packages:
+  Moya:
+    url: https://github.com/Moya/Moya
+    from: 15.0.0
+  NeedleFoundation:
+    url: https://github.com/uber/needle
+    from: 0.18.1
+  SwiftProtobuf:
+    url: https://github.com/apple/swift-protobuf
+    from: 1.19.0
+targets:
+  mono:
+    type: application
+    platform: iOS
+    deploymentTarget: "15.4"
+    info:
+      path: mono/Info.plist
+      properties:
+        CFBundleName: mono
+        CFBundleShortVersionString: 1.0.0
+        CFBundleVersion: 1.0.0
+        UISupportedInterfaceOrientations~iphone:
+          - UIInterfaceOrientationPortrait
+        UIApplicationSupportsIndirectInputEvents: true
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        LSRequiresIPhoneOS: true
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UILaunchScreen:
+          UILaunchScreen:
+    dependencies:
+      - package: Moya
+      - package: NeedleFoundation
+    sources:
+      - mono
+      - resources
+      - scripts
+    scheme:
+      gatherCoverageData: true
+      testTargets:
+        - name: monoTests
+          randomExecutionOrder: true
+        - name: monoUITests
+          randomExecutionOrder: true
+  monoTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "15.4"
+    info:
+      path: monoTests/Info.plist
+    dependencies:
+      - target: mono
+    sources:
+      - monoTests
+  monoUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "15.4"
+    info:
+      path: monoUITests/Info.plist
+    dependencies:
+      - target: mono
+    sources:
+      - monoUITests

@@ -1,5 +1,5 @@
 //
-//  monoUITestsLaunchTests.swift
+//  MonoUITestsLaunchTests.swift
 //  monoUITests
 //
 
