@@ -2,6 +2,16 @@ load("//tools/starlark/jupyter:jupyter_bazel.bzl", "jupyter_py_binary")
 load("@py_deps//:requirements.bzl", "requirement")
 
 jupyter_py_binary(
+    name = "enjoyable_econometrics",
+    notebook = "enjoyable_econometrics.ipynb",
+    deps = [
+        requirement("jupyter-core"),
+        requirement("numpy"),
+        requirement("scipy"),
+    ],
+)
+
+jupyter_py_binary(
     name = "hello_world",
     notebook = "hello_world.ipynb",
     deps = [
