@@ -19,22 +19,11 @@ helm_deps()
 load("//python:repositories.bzl", "python_deps")
 python_deps()
 
-load("@rules_python//python:repositories.bzl", "python_register_toolchains")
-
-# Available versions are listed in @rules_python//python:versions.bzl.
-python_register_toolchains(
-    name = "python3_9",
-    python_version = "3.9",
-)
-
-load("@python3_9//:defs.bzl", "interpreter")
-
 # Create a central external repo, @my_deps, that contains Bazel targets for all the
 # third-party packages specified in the requirements.txt file.
 load("@rules_python//python:pip.bzl", "pip_install")
 pip_install(
     name = "py_deps",
-    python_interpreter_target = interpreter,
     requirements = "//python:requirements.txt",
 )
 

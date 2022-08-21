@@ -6,6 +6,7 @@
     },
     "files.exclude": {
         "android": true,
+        "python/notebooks/*.ipynb": true,
     },
     "search.exclude": {
         "**/node_modules": true,

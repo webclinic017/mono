@@ -18,3 +18,10 @@ jupyter_py_binary(
         requirement("vectorbt"),
     ],
 )
+
+jupyter_py_binary(
+    name = "epi",
+    notebook = "epi.ipynb",
+    deps = [
+    ],
+)
