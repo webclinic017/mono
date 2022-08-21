@@ -5,7 +5,6 @@ jupyter_py_binary(
     name = "enjoyable_econometrics",
     notebook = "enjoyable_econometrics.ipynb",
     deps = [
-        requirement("jupyter-core"),
         requirement("numpy"),
         requirement("scipy"),
     ],
