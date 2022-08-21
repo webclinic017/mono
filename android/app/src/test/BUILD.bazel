@@ -1,0 +1,10 @@
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_test")
+
+kt_jvm_test(
+    name = "example_unit_test",
+    srcs = ["java/xyz/fjarm/app/ExampleUnitTest.kt"],
+    test_class = "xyz.fjarm.app.ExampleUnitTest",
+    deps = [
+        "@maven//:junit_junit",
+    ],
+)

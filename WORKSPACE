@@ -94,3 +94,39 @@ load("@io_bazel_rules_k8s//k8s:k8s_go_deps.bzl", k8s_go_deps = "deps")
 k8s_go_deps()
 
 ## End extra ##
+
+## Begin Android rules ##
+
+load("//android:repositories.bzl", "android_deps", "maven_deps")
+android_deps()
+
+load("@build_bazel_rules_android//android:rules.bzl", "android_sdk_repository", "android_ndk_repository")
+
+android_sdk_repository(
+    name = "androidsdk",
+    api_level = 30,
+    build_tools_version = "30.0.3",
+)
+
+android_ndk_repository(
+    name = "androidndk",
+)
+
+load("@io_bazel_rules_kotlin//kotlin:repositories.bzl", "kotlin_repositories")
+kotlin_repositories()
+
+load("@io_bazel_rules_kotlin//kotlin:core.bzl", "kt_register_toolchains")
+kt_register_toolchains()
+
+load("@robolectric//bazel:robolectric.bzl", "robolectric_repositories")
+robolectric_repositories()
+
+load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
+rules_jvm_external_deps()
+
+load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
+rules_jvm_external_setup()
+
+maven_deps()
+
+## End Android rules ##

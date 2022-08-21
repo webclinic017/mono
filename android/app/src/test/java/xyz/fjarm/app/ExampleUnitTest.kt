@@ -1,4 +1,4 @@
-package com.veganafro.app
+package xyz.fjarm.app
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

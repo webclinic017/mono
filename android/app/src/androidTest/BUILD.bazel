@@ -1,0 +1,16 @@
+load("@io_bazel_rules_kotlin//kotlin:android.bzl", "kt_android_local_test")
+
+kt_android_local_test(
+    name = "example_android_test",
+    srcs = ["java/xyz/fjarm/app/ExampleInstrumentedTest.kt"],
+    custom_package = "xyz.fjarm.app",
+    # A manifest file is needed here because `androidx_test_monitor` package sets a `minSdkVersion`
+    manifest = ":AndroidManifest.xml",
+    test_class = "xyz.fjarm.ExampleInstrumentedTest",
+    deps = [
+        "@maven//:androidx_test_ext_junit",
+        "@maven//:androidx_test_monitor",
+        "@maven//:org_robolectric_robolectric",
+        "@robolectric//bazel:android-all",
+    ],
+)

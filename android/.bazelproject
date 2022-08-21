@@ -1,0 +1,39 @@
+directories:
+  # Add the directories you want added as source here
+  # By default, we've added your entire workspace ('.')
+  android
+  -proto
+  -golang
+  -helm
+  -ios
+  -python
+  -tools
+
+# Automatically includes all relevant targets under the 'directories' above
+derive_targets_from_directories: true
+
+targets:
+  # If source code isn't resolving, add additional targets that compile it here
+
+additional_languages:
+  # Uncomment any additional languages you want supported
+  # c
+  # dart
+  kotlin
+  # python
+
+# Please uncomment an android-SDK platform. Available SDKs are:
+# android_sdk_platform: android-29
+android_sdk_platform: android-30
+# android_sdk_platform: android-31
+# android_sdk_platform: android-32
+
+android_min_sdk: 20
+
+java_language_level: 11
+
+test_sources:
+  android/*/src/androidTest/*
+  android/*/src/test/*
+
+shard_sync: true

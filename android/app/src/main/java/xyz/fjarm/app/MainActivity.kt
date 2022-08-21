@@ -1,4 +1,4 @@
-package com.veganafro.app
+package xyz.fjarm.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
