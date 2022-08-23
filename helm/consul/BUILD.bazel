@@ -3,10 +3,17 @@ load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
 load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
 
 helm_template(
-    name = "consul",
+    name = "consul-dev",
     chart_tar = "@consul//:chart.tgz",
     namespace = "consul",
-    values_yaml_file = ":consul-values.yaml",
+    values_yaml_file = ":consul-values-dev.yaml",
+)
+
+helm_template(
+    name = "consul-prod",
+    chart_tar = "@consul//:chart.tgz",
+    namespace = "consul",
+    values_yaml_file = ":consul-values-prod.yaml",
 )
 
 k8s_object(
@@ -16,15 +23,29 @@ k8s_object(
 )
 
 k8s_object(
-    name = "consul-object",
+    name = "consul-object-dev",
     cluster = "$(CLUSTER)",
-    template = ":consul",
+    template = ":consul-dev",
+)
+
+k8s_object(
+    name = "consul-object-prod",
+    cluster = "$(CLUSTER)",
+    template = ":consul-prod",
 )
 
 k8s_objects(
-    name = "consul-all",
+    name = "consul-all-dev",
     objects = [
         ":consul-namespace",
-        ":consul-object",
+        ":consul-object-dev",
+    ],
+)
+
+k8s_objects(
+    name = "consul-all-prod",
+    objects = [
+        ":consul-namespace",
+        ":consul-object-prod",
     ],
 )

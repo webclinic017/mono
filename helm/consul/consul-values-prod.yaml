@@ -1,6 +1,7 @@
 global:
   name: consul
-  datacenter: fjarm-nyc3-cluster
+  datacenter: fjarm-nyc1-cluster
+  image: "consul:1.13"
   # By setting `manageSystemACLs` to true, the ACL system
   # will configure itself. You do not need to take any
   # action beyond setting the value in the config file.
@@ -29,8 +30,8 @@ global:
     enabled: false
 server:
   enabled: true
-  # TODO For production deployments, the replica count should be 3 to 5
-  replicas: 1
+  # For production deployments, the replica count should be 3 to 5
+  replicas: 3
   securityContext:
     runAsNonRoot: false
     runAsUser: 0

@@ -38,6 +38,8 @@ go_image(
     name = "dummer-go-image",
     base = ":dummer-go-image-base",
     embed = [":dummer-lib"],
+    goos = "linux",
+    goarch = "amd64",
     visibility = ["//visibility:public"],
 )
 

@@ -15,7 +15,7 @@ def helm_deps():
         version = HEML_TOOL_VERSION,
     )
 
-    CONSUL_CHART_VERSION = "0.41.1"
+    CONSUL_CHART_VERSION = "0.47.1"
 
     helm_chart(
         name = "consul",

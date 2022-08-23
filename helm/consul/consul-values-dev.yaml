@@ -1,0 +1,70 @@
+global:
+  name: consul
+  datacenter: fjarm-nyc3-cluster
+  image: "consul:1.13"
+  # By setting `manageSystemACLs` to true, the ACL system
+  # will configure itself. You do not need to take any
+  # action beyond setting the value in the config file.
+  acls:
+    manageSystemACLs: true
+  # This stanza provides the helm chart with the name
+  # of a Kubernetes secret to retrieve
+  # and use as the gossip encryption key at runtime.
+  # You must create a valid key and register it
+  # as a secret with Kubernetes.
+  gossipEncryption:
+    autoGenerate: true
+  tls:
+    enabled: true
+    # By enabling TLS and setting `enableAutoEncrypt` to true,
+    # the TLS system will configure itself. You
+    # do not need to take any action beyond setting these values
+    # in the config file.
+    enableAutoEncrypt: true
+    # The `verify` setting instructs Consul to verify the
+    # authenticity of servers and clients.
+    verify: true
+    httpsOnly: true
+  enablePodSecurityPolicies: false
+  metrics:
+    enabled: false
+server:
+  enabled: true
+  # For production deployments, the replica count should be 3 to 5
+  replicas: 1
+  securityContext:
+    runAsNonRoot: false
+    runAsUser: 0
+  resources:
+    limits:
+      memory: '4Gi'
+      cpu: '1'
+  extraConfig: |
+    {
+      "limits": {
+        "http_max_conns_per_client": 500
+      },
+      "log_level": "WARN"
+    }
+ui:
+  enabled: false
+client:
+  resources:
+    limits:
+      memory: '4Gi'
+      cpu: '1'
+  extraConfig: |
+    {
+      "advertise_reconnect_timeout": "15m"
+    }
+  grpc: true
+connectInject:
+  enabled: true
+  default: false
+  logLevel: "warn"
+controller:
+  enabled: true
+prometheus:
+  enabled: false
+tests:
+  enabled: false
