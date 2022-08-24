@@ -45,7 +45,7 @@ def helm_deps():
         version = CERT_MANAGER_VERSION,
     )
 
-    NGINX_INGRESS_VERSION = "v4.0.19"
+    NGINX_INGRESS_VERSION = "v4.2.3"
 
     helm_chart(
         name = "nginx-ingress",

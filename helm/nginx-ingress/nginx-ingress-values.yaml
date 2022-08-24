@@ -1,4 +1,6 @@
 controller:
+  image:
+    tag: "v1.3.0"
   admissionWebhooks:
     enabled: false
     patch:
