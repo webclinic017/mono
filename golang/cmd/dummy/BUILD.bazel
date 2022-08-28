@@ -1,8 +1,6 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image", "container_push")
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")
-load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
-load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
 
 go_library(
     name = "dummy-lib",
@@ -51,55 +49,4 @@ container_push(
     registry = "index.docker.io",
     repository = "veganafro/dummy_image",
     tag = "dev",
-)
-
-k8s_object(
-    name = "dummy-namespace",
-    cluster = "$(CLUSTER)",
-    template = ":dummy-namespace.yaml",
-)
-
-k8s_object(
-    name = "dummy-serviceaccount",
-    cluster = "$(CLUSTER)",
-    template = ":dummy-serviceaccount.yaml",
-)
-
-k8s_object(
-    name = "dummy-service",
-    cluster = "$(CLUSTER)",
-    template = ":dummy-service.yaml",
-)
-
-k8s_object(
-    name = "dummy-deployment",
-    cluster = "$(CLUSTER)",
-    images = {
-        "veganafro/dummy_image:dev": ":dummy-go-image",
-    },
-    template = ":dummy-deployment.yaml",
-)
-
-k8s_object(
-    name = "dummy-servicedefault",
-    cluster = "$(CLUSTER)",
-    template = ":dummy-servicedefault.yaml",
-)
-
-k8s_object(
-    name = "dummy-ingress",
-    cluster = "$(CLUSTER)",
-    template = ":dummy-ingress.yaml",
-)
-
-k8s_objects(
-    name = "dummy-all",
-    objects = [
-        ":dummy-namespace",
-        ":dummy-serviceaccount",
-        ":dummy-service",
-        ":dummy-deployment",
-        ":dummy-servicedefault",
-        ":dummy-ingress",
-    ],
 )

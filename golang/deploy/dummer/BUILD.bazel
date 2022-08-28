@@ -1,0 +1,53 @@
+load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
+load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
+
+k8s_object(
+    name = "dummer-namespace",
+    cluster = "$(CLUSTER)",
+    template = ":dummer-namespace.yaml",
+)
+
+k8s_object(
+    name = "dummer-serviceaccount",
+    cluster = "$(CLUSTER)",
+    template = ":dummer-serviceaccount.yaml",
+)
+
+k8s_object(
+    name = "dummer-service",
+    cluster = "$(CLUSTER)",
+    template = ":dummer-service.yaml",
+)
+
+k8s_object(
+    name = "dummer-deployment",
+    cluster = "$(CLUSTER)",
+    images = {
+        "veganafro/dummer_image:dev": "//golang/cmd/dummer:dummer-go-image",
+    },
+    template = ":dummer-deployment.yaml",
+)
+
+k8s_object(
+    name = "dummer-servicedefault",
+    cluster = "$(CLUSTER)",
+    template = ":dummer-servicedefault.yaml",
+)
+
+k8s_object(
+    name = "dummer-ingress",
+    cluster = "$(CLUSTER)",
+    template = ":dummer-ingress.yaml",
+)
+
+k8s_objects(
+    name = "dummer-all",
+    objects = [
+        ":dummer-namespace",
+        ":dummer-serviceaccount",
+        ":dummer-service",
+        ":dummer-deployment",
+        ":dummer-servicedefault",
+        ":dummer-ingress",
+    ],
+)
