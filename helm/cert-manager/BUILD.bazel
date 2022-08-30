@@ -29,13 +29,13 @@ k8s_object(
 )
 
 k8s_object(
-    name = "cert-manager-clusterissuer-internal",
+    name = "cert-manager-ca-clusterissuer",
     cluster = "$(CLUSTER)",
     template = ":cert-manager-ca-clusterissuer.yaml",
 )
 
 k8s_object(
-    name = "cert-manager-clusterissuer-external",
+    name = "cert-manager-acme-clusterissuer",
     cluster = "$(CLUSTER)",
     template = ":cert-manager-acme-clusterissuer.yaml",
 )
@@ -52,7 +52,7 @@ k8s_objects(
     name = "cert-manager-clusterissuers",
     objects = [
         ":cert-manager-ca-secret",
-        ":cert-manager-clusterissuer-internal",
-        ":cert-manager-clusterissuer-external",
+        ":cert-manager-ca-clusterissuer",
+        ":cert-manager-acme-clusterissuer",
     ],
 )

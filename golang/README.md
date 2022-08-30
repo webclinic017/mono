@@ -75,6 +75,18 @@ entrypoints' `BUILD.bazel` files for examples.
 
 Coming soon...
 
+## Dependencies
+
+### Golang
+
+| Name | Version | Notes |
+|------|---------|-------|
+| [grpc_gateway](https://github.com/grpc-ecosystem/grpc-gateway) | [2.10.3](https://github.com/grpc-ecosystem/grpc-gateway/releases/tag/v2.10.3) | N/A |
+| [org_golang_google_grpc](https://google.golang.org/grpc) | [1.48.0](https://github.com/grpc/grpc-go/releases/tag/v1.48.0) | N/A |
+| [org_golang_x_net](https://golang.org/x/net) | [v0.0.0-20220708220712-1185a9018129](https://pkg.go.dev/golang.org/x/net@vv0.0.0-20220708220712-1185a9018129) | N/A |
+| [org_golang_google_protobuf](https://google.golang.org/protobuf) | [1.28.0](https://pkg.go.dev/google.golang.org/protobuf@v1.28.0) | N/A |
+| [com_github_hashicorp_consul_api](https://github.com/hashicorp/consul/tree/main/api) | [1.13.1](https://pkg.go.dev/github.com/hashicorp/consul/api@v1.13.1) | Currently unused |
+
 ## Helpful notes
 
 [Bazel gazelle docs](https://github.com/bazelbuild/bazel-gazelle/blob/master/repository.rst)

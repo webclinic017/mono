@@ -35,7 +35,7 @@ def helm_deps():
         version = VAULT_CHART_VERSION,
     )
 
-    CERT_MANAGER_VERSION = "v1.6.1"
+    CERT_MANAGER_VERSION = "v1.9.1"
 
     helm_chart(
         name = "cert-manager",

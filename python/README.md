@@ -64,6 +64,14 @@ Don't forget to deactivate the virtual environment:
 $ deactivate
 ```
 
+## Dependencies
+
+### Python (pip)
+
+| Name | Version | Notes |
+|------|---------|-------|
+| [vectorbt[full]](https://github.com/polakowo/vectorbt) | [0.22.0](https://pypi.org/project/vectorbt/0.22.0/) | N/A |
+
 ## Helpful notes
 
 [Jupyter via bazel](https://github.com/bazelbuild/rules_python/issues/63)
