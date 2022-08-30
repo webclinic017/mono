@@ -1,4 +1,0 @@
-vectorbt[full]==0.22.0
-numpy==1.21.5
-# TODO: remove after upgrading vectorbt
-pillow==9.0.1

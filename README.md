@@ -69,6 +69,12 @@ $ virtualenv venv
 
 If `brew` installed any `python` formulas direclty like `python@3.X`, uninstall them.
 
+## System diagram
+
+Below is the general system diagram:
+
+![System design](./system_design.png)
+
 ## Dependencies
 
 ### Bazel

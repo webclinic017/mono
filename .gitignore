@@ -21,6 +21,7 @@
 bazel-*
 
 # Python generated output
+**.egg
 **.egg-info
 
 # CockroachDB generated output
