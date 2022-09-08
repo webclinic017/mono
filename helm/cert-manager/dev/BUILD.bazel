@@ -1,0 +1,51 @@
+load("//tools/starlark/helm:helm_template.bzl", "helm_template")
+load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
+load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
+
+k8s_object(
+    name = "cert-manager-namespace",
+    cluster = "minikube",
+    template = ":cert-manager-namespace.yaml",
+)
+
+helm_template(
+    name = "cert-manager",
+    chart_tar = "@cert-manager//:chart.tgz",
+    namespace = "cert-manager",
+    values_yaml_file = ":cert-manager-values.yaml",
+)
+
+k8s_object(
+    name = "cert-manager-object",
+    cluster = "minikube",
+    template = ":cert-manager",
+)
+
+k8s_object(
+    name = "cert-manager-ca-secret",
+    cluster = "minikube",
+    resolver = "//golang/internal/certs:certs",
+    template = ":cert-manager-ca-secret.yaml",
+)
+
+k8s_object(
+    name = "cert-manager-ca-clusterissuer",
+    cluster = "minikube",
+    template = ":cert-manager-ca-clusterissuer.yaml",
+)
+
+k8s_objects(
+    name = "cert-manager-all",
+    objects = [
+        ":cert-manager-namespace",
+        ":cert-manager-object",
+    ],
+)
+
+k8s_objects(
+    name = "cert-manager-clusterissuers",
+    objects = [
+        ":cert-manager-ca-secret",
+        ":cert-manager-ca-clusterissuer",
+    ],
+)

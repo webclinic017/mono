@@ -1,6 +1,6 @@
 global:
   name: consul
-  datacenter: fjarm-nyc3-cluster
+  datacenter: mono-consul-nyc3
   image: "consul:1.13"
   # By setting `manageSystemACLs` to true, the ACL system
   # will configure itself. You do not need to take any
@@ -31,14 +31,19 @@ global:
 server:
   enabled: true
   # For production deployments, the replica count should be 3 to 5
-  replicas: 1
+  replicas: 2
+  bootstrapExpect: 2
+  storage: 8Gi
   securityContext:
     runAsNonRoot: false
     runAsUser: 0
   resources:
+    requests:
+      memory: '0.5Gi'
+      cpu: '0.25'
     limits:
-      memory: '4Gi'
-      cpu: '1'
+      memory: '0.5Gi'
+      cpu: '0.25'
   extraConfig: |
     {
       "limits": {
@@ -50,9 +55,12 @@ ui:
   enabled: false
 client:
   resources:
+    requests:
+      memory: '0.5Gi'
+      cpu: '0.25'
     limits:
-      memory: '4Gi'
-      cpu: '1'
+      memory: '0.5Gi'
+      cpu: '0.25'
   extraConfig: |
     {
       "advertise_reconnect_timeout": "15m"

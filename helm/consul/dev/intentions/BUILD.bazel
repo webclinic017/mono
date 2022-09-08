@@ -1,0 +1,23 @@
+load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
+load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
+
+k8s_object(
+    name = "allow-to-dummy-intention",
+    cluster = "minikube",
+    template = "allow-to-dummy-intention.yaml",
+)
+
+k8s_object(
+    name = "allow-to-dummer-intention",
+    cluster = "minikube",
+    template = "allow-to-dummer-intention.yaml",
+)
+
+k8s_objects(
+    name = "intentions-all",
+    visibility = ["//visibility:public"],
+    objects = [
+        ":allow-to-dummy-intention",
+        ":allow-to-dummer-intention",
+    ],
+)

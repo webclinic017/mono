@@ -1,0 +1,30 @@
+load("//tools/starlark/helm:helm_template.bzl", "helm_template")
+load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
+load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
+
+k8s_object(
+    name = "consul-namespace",
+    cluster = "do-nyc3-mono-doks-nyc3",
+    template = ":consul-namespace.yaml",
+)
+
+helm_template(
+    name = "consul",
+    chart_tar = "@consul//:chart.tgz",
+    namespace = "consul",
+    values_yaml_file = ":consul-values.yaml",
+)
+
+k8s_object(
+    name = "consul-object",
+    cluster = "do-nyc3-mono-doks-nyc3",
+    template = ":consul",
+)
+
+k8s_objects(
+    name = "consul-all",
+    objects = [
+        ":consul-namespace",
+        ":consul-object",
+    ],
+)

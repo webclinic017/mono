@@ -1,0 +1,20 @@
+controller:
+  image:
+    tag: "v1.3.0"
+  admissionWebhooks:
+    enabled: false
+    patch:
+      enabled: false
+  config:
+    proxy-buffer-size: "16k"
+  podAnnotations:
+    consul.hashicorp.com/connect-inject: "true"
+    consul.hashicorp.com/transparent-proxy: "true"
+    # Add the container ports used by your ingress controller
+    consul.hashicorp.com/transparent-proxy-exclude-inbound-ports: "80,443,8443"
+    # And the CIDR of your Kubernetes API: `kubectl get svc kubernetes --output jsonpath='{.spec.clusterIP}'
+    consul.hashicorp.com/transparent-proxy-exclude-outbound-cidrs: "10.245.0.1/32"
+  publishService:
+    enabled: true
+serviceAccount:
+  name: "nginx-ingress-ingress-nginx-controller"

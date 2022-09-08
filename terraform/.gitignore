@@ -1,0 +1,3 @@
+# Terraform output files
+.terraform
+.terraform.lock.hcl

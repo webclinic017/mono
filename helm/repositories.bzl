@@ -8,14 +8,14 @@ def helm_deps():
     """
     Fetches all required dependencies for helm tests and tools.
     """
-    HEML_TOOL_VERSION = "v3.6.2"
+    HEML_TOOL_VERSION = "v3.9.4"
 
     helm_tool(
         name = "helm_tool",
         version = HEML_TOOL_VERSION,
     )
 
-    CONSUL_CHART_VERSION = "0.47.1"
+    CONSUL_CHART_VERSION = "0.48.0"
 
     helm_chart(
         name = "consul",

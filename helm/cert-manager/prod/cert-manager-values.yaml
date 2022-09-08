@@ -1,0 +1,8 @@
+global:
+  leaderElection:
+    namespace: "cert-manager"
+image:
+  tag: "v1.9.1"
+installCRDs: true
+prometheus:
+  enabled: false

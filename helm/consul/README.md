@@ -13,3 +13,4 @@ authorization and connection encryption.
 [Consul k8s quickstart](https://learn.hashicorp.com/tutorials/consul/service-mesh-deploy)
 [Consul API gateway](https://learn.hashicorp.com/tutorials/consul/kubernetes-api-gateway)
 [Consul + Nginx Ingress common bugs](https://discuss.hashicorp.com/t/not-able-to-reach-to-a-consul-mesh-from-kubernetes-nginx-ingress/26343/4)
+[Consul pod unbound immediate PersistentVolumeClaims](https://github.com/hashicorp/consul-helm/issues/237)

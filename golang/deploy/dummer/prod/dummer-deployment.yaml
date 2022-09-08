@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dummer
+  name: dummer
+  namespace: dummer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dummer
+  template:
+    metadata:
+      labels:
+        app: dummer
+      annotations:
+        consul.hashicorp.com/connect-inject: "true"
+        consul.hashicorp.com/connect-service-upstreams: "dummy:8000"
+        consul.hashicorp.com/transparent-proxy: "true"
+    spec:
+      serviceAccountName: dummer
+      containers:
+      - name: dummer
+        image: veganafro/dummer_image:dev
+        ports:
+        - containerPort: 8001
+        resources:
+          limits:
+            memory: 8Mi
+            cpu: "0.10"

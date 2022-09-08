@@ -11,27 +11,27 @@ helm_template(
 
 k8s_object(
     name = "vault-namespace",
-    cluster = "$(CLUSTER)",
+    cluster = "minikube",
     template = ":vault-namespace.yaml",
 )
 
 k8s_object(
-    name = "vault-certificate-dev",
-    cluster = "$(CLUSTER)",
-    template = ":vault-certificate-dev.yaml",
+    name = "vault-certificate",
+    cluster = "minikube",
+    template = ":vault-certificate.yaml",
 )
 
 k8s_object(
     name = "vault-object",
-    cluster = "$(CLUSTER)",
+    cluster = "minikube",
     template = ":vault",
 )
 
 k8s_objects(
-    name = "vault-all-dev",
+    name = "vault-all",
     objects = [
         ":vault-namespace",
-        ":vault-certificate-dev",
+        ":vault-certificate",
         ":vault-object",
     ],
 )

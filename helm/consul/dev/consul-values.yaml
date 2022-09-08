@@ -1,6 +1,6 @@
 global:
   name: consul
-  datacenter: fjarm-nyc1-cluster
+  datacenter: minikube
   image: "consul:1.13"
   # By setting `manageSystemACLs` to true, the ACL system
   # will configure itself. You do not need to take any
@@ -31,27 +31,29 @@ global:
 server:
   enabled: true
   # For production deployments, the replica count should be 3 to 5
-  replicas: 3
+  replicas: 2
+  bootstrapExpect: 2
+  storage: 8Gi
   securityContext:
     runAsNonRoot: false
     runAsUser: 0
   resources:
     limits:
-      memory: '4Gi'
+      memory: '1Gi'
       cpu: '1'
   extraConfig: |
     {
       "limits": {
         "http_max_conns_per_client": 500
       },
-      "log_level": "WARN"
+      "log_level": "INFO"
     }
 ui:
   enabled: false
 client:
   resources:
     limits:
-      memory: '4Gi'
+      memory: '1Gi'
       cpu: '1'
   extraConfig: |
     {
@@ -61,7 +63,7 @@ client:
 connectInject:
   enabled: true
   default: false
-  logLevel: "warn"
+  logLevel: "info"
 controller:
   enabled: true
 prometheus:

@@ -3,25 +3,25 @@ load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
 
 k8s_object(
     name = "dummy-namespace",
-    cluster = "$(CLUSTER)",
+    cluster = "minikube",
     template = ":dummy-namespace.yaml",
 )
 
 k8s_object(
     name = "dummy-serviceaccount",
-    cluster = "$(CLUSTER)",
+    cluster = "minikube",
     template = ":dummy-serviceaccount.yaml",
 )
 
 k8s_object(
     name = "dummy-service",
-    cluster = "$(CLUSTER)",
+    cluster = "minikube",
     template = ":dummy-service.yaml",
 )
 
 k8s_object(
     name = "dummy-deployment",
-    cluster = "$(CLUSTER)",
+    cluster = "minikube",
     images = {
         "veganafro/dummy_image:dev": "//golang/cmd/dummy:dummy-go-image",
     },
@@ -30,14 +30,8 @@ k8s_object(
 
 k8s_object(
     name = "dummy-servicedefault",
-    cluster = "$(CLUSTER)",
+    cluster = "minikube",
     template = ":dummy-servicedefault.yaml",
-)
-
-k8s_object(
-    name = "dummy-ingress",
-    cluster = "$(CLUSTER)",
-    template = ":dummy-ingress.yaml",
 )
 
 k8s_objects(
@@ -48,6 +42,5 @@ k8s_objects(
         ":dummy-service",
         ":dummy-deployment",
         ":dummy-servicedefault",
-        ":dummy-ingress",
     ],
 )

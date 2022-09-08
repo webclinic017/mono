@@ -1,0 +1,53 @@
+load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
+load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
+
+k8s_object(
+    name = "dummy-namespace",
+    cluster = "do-nyc3-mono-doks-nyc3",
+    template = ":dummy-namespace.yaml",
+)
+
+k8s_object(
+    name = "dummy-serviceaccount",
+    cluster = "do-nyc3-mono-doks-nyc3",
+    template = ":dummy-serviceaccount.yaml",
+)
+
+k8s_object(
+    name = "dummy-service",
+    cluster = "do-nyc3-mono-doks-nyc3",
+    template = ":dummy-service.yaml",
+)
+
+k8s_object(
+    name = "dummy-deployment",
+    cluster = "do-nyc3-mono-doks-nyc3",
+    images = {
+        "veganafro/dummy_image:dev": "//golang/cmd/dummy:dummy-go-image",
+    },
+    template = ":dummy-deployment.yaml",
+)
+
+k8s_object(
+    name = "dummy-servicedefault",
+    cluster = "do-nyc3-mono-doks-nyc3",
+    template = ":dummy-servicedefault.yaml",
+)
+
+k8s_object(
+    name = "dummy-ingress",
+    cluster = "do-nyc3-mono-doks-nyc3",
+    template = ":dummy-ingress.yaml",
+)
+
+k8s_objects(
+    name = "dummy-all",
+    objects = [
+        ":dummy-namespace",
+        ":dummy-serviceaccount",
+        ":dummy-service",
+        ":dummy-deployment",
+        ":dummy-servicedefault",
+        ":dummy-ingress",
+    ],
+)

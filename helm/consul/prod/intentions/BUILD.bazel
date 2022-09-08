@@ -3,13 +3,13 @@ load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
 
 k8s_object(
     name = "allow-to-dummy-intention",
-    cluster = "$(CLUSTER)",
+    cluster = "do-nyc3-mono-doks-nyc3",
     template = "allow-to-dummy-intention.yaml",
 )
 
 k8s_object(
     name = "allow-to-dummer-intention",
-    cluster = "$(CLUSTER)",
+    cluster = "do-nyc3-mono-doks-nyc3",
     template = "allow-to-dummer-intention.yaml",
 )
 

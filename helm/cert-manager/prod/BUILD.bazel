@@ -2,6 +2,12 @@ load("//tools/starlark/helm:helm_template.bzl", "helm_template")
 load("@io_bazel_rules_k8s//k8s:object.bzl", "k8s_object")
 load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
 
+k8s_object(
+    name = "cert-manager-namespace",
+    cluster = "do-nyc3-mono-doks-nyc3",
+    template = ":cert-manager-namespace.yaml",
+)
+
 helm_template(
     name = "cert-manager",
     chart_tar = "@cert-manager//:chart.tgz",
@@ -10,33 +16,27 @@ helm_template(
 )
 
 k8s_object(
-    name = "cert-manager-namespace",
-    cluster = "$(CLUSTER)",
-    template = ":cert-manager-namespace.yaml",
+    name = "cert-manager-object",
+    cluster = "do-nyc3-mono-doks-nyc3",
+    template = ":cert-manager",
 )
 
 k8s_object(
     name = "cert-manager-ca-secret",
-    cluster = "$(CLUSTER)",
+    cluster = "do-nyc3-mono-doks-nyc3",
     resolver = "//golang/internal/certs:certs",
     template = ":cert-manager-ca-secret.yaml",
 )
 
 k8s_object(
-    name = "cert-manager-object",
-    cluster = "$(CLUSTER)",
-    template = ":cert-manager",
-)
-
-k8s_object(
     name = "cert-manager-ca-clusterissuer",
-    cluster = "$(CLUSTER)",
+    cluster = "do-nyc3-mono-doks-nyc3",
     template = ":cert-manager-ca-clusterissuer.yaml",
 )
 
 k8s_object(
     name = "cert-manager-acme-clusterissuer",
-    cluster = "$(CLUSTER)",
+    cluster = "do-nyc3-mono-doks-nyc3",
     template = ":cert-manager-acme-clusterissuer.yaml",
 )
 
