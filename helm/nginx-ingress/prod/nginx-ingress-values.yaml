@@ -5,6 +5,8 @@ controller:
     enabled: false
     patch:
       enabled: false
+  autoscaling:
+    enabled: true
   config:
     proxy-buffer-size: "16k"
   podAnnotations:

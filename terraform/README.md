@@ -16,5 +16,5 @@ $ cd terraform/docn
 $ terraform login
 $ terraform init
 $ terraform plan
-$ terraform apply
+$ terraform apply -auto-approve
 ```

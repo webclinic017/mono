@@ -2,6 +2,18 @@
 
 Resources related to helm charts for the mono backend.
 
+## Setup
+
+The order of operations is as follows:
+
+```shell
+$ bazel run //helm/consul/{dev,prod}:consul-all.apply
+$ bazel run //helm/cert-manager/{dev,prod}:cert-manager-all.apply
+$ bazel run //helm/cert-manager/{dev,prod}:cert-manager-acme-clusterissuer.apply
+$ bazel run //helm/nginx-ingress/{dev,prod}:nginx-ingress-all.apply
+$ bazel run //helm/consul/{dev,prod}/intentions:intentions-all.apply
+```
+
 ## Dependencies
 
 ### Helm
