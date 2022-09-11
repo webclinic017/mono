@@ -22,20 +22,7 @@ k8s_object(
 )
 
 k8s_object(
-    name = "cert-manager-ca-secret",
-    cluster = "do-nyc3-mono-doks-nyc3",
-    resolver = "//golang/internal/certs:certs",
-    template = ":cert-manager-ca-secret.yaml",
-)
-
-k8s_object(
-    name = "cert-manager-ca-clusterissuer",
-    cluster = "do-nyc3-mono-doks-nyc3",
-    template = ":cert-manager-ca-clusterissuer.yaml",
-)
-
-k8s_object(
-    name = "cert-manager-acme-clusterissuer",
+    name = "cert-manager-clusterissuer",
     cluster = "do-nyc3-mono-doks-nyc3",
     template = ":cert-manager-acme-clusterissuer.yaml",
 )
@@ -45,14 +32,5 @@ k8s_objects(
     objects = [
         ":cert-manager-namespace",
         ":cert-manager-object",
-    ],
-)
-
-k8s_objects(
-    name = "cert-manager-clusterissuers",
-    objects = [
-        ":cert-manager-ca-secret",
-        ":cert-manager-ca-clusterissuer",
-        ":cert-manager-acme-clusterissuer",
     ],
 )

@@ -9,8 +9,8 @@ def proto_deps():
     """
     Fetches all required dependencies for proto tests and tools.
     """
-    COM_GOOGLE_PROTOBUF_SHA = "3bd7828aa5af4b13b99c191e8b1e884ebfa9ad371b0ce264605d347f135d2568"
-    COM_GOOGLE_PROTOBUF_VERSION = "3.19.4"
+    COM_GOOGLE_PROTOBUF_SHA = "d7d204a59fd0d2d2387bd362c2155289d5060f32122c4d1d922041b61191d522"
+    COM_GOOGLE_PROTOBUF_VERSION = "3.21.5"
 
     maybe(
         http_archive,
@@ -22,8 +22,8 @@ def proto_deps():
         ],
     )
 
-    RULES_PROTO_SHA = "9850fcf6ad40fa348e6f13b2cfef4bb4639762f804794f2bf61d988f4ba0dae9"
-    RULES_PROTO_VERSION = "4.0.0-3.19.2-2"
+    RULES_PROTO_SHA = "e017528fd1c91c5a33f15493e3a398181a9e821a804eb7ff5acdd1d2d6c2b18d"
+    RULES_PROTO_VERSION = "4.0.0-3.20.0"
 
     maybe(
         http_archive,

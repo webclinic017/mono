@@ -81,13 +81,8 @@ Below is the general system diagram:
 
 | Name | Version | Notes |
 |------|---------|-------|
-| [rules_python](https://github.com/bazelbuild/rules_python) | [0.8.1](https://github.com/bazelbuild/rules_python/releases/tag/0.8.1) | N/A |
-| [com_google_protobuf](https://github.com/protocolbuffers/protobuf) | [3.19.4](https://github.com/protocolbuffers/protobuf/releases/tag/v3.19.4) | N/A |
-| [rules_proto](https://github.com/bazelbuild/rules_proto) | [4.0.0-3.19.2-2](https://github.com/bazelbuild/rules_proto/releases/tag/4.0.0-3.19.2-2) | N/A |
-| [io_bazel_rules_go](https://github.com/bazelbuild/rules_go) | [0.30.0](https://github.com/bazelbuild/rules_go/releases/tag/v0.30.0) | N/A |
-| [bazel_gazelle](https://github.com/bazelbuild/bazel-gazelle) | [0.24.0](https://github.com/bazelbuild/bazel-gazelle/releases/tag/v0.22.3) | N/A |
-| [io_bazel_rules_docker](https://github.com/bazelbuild/rules_docker) | [0.24.0](https://github.com/bazelbuild/rules_docker/releases/tag/v0.24.0)  | N/A |
-| [io_bazel_rules_k8s](https://github.com/bazelbuild/rules_k8s) | [0.6](https://github.com/bazelbuild/rules_k8s/releases/tag/v0.6) | N/A |
+| [io_bazel_rules_docker](https://github.com/bazelbuild/rules_docker) | [0.25.0](https://github.com/bazelbuild/rules_docker/releases/tag/v0.25.0)  | N/A |
+| [io_bazel_rules_k8s](https://github.com/bazelbuild/rules_k8s) | [0.7](https://github.com/bazelbuild/rules_k8s/releases/tag/v0.7) | N/A |
 
 ### Other
 

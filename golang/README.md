@@ -75,6 +75,13 @@ entrypoints' `BUILD.bazel` files for examples.
 
 Coming soon...
 
+### Locally test a single service in a container
+
+```bash
+$ bazel run //golang/cmd/{service}:{service}-go-image
+$ docker run --rm -it -p{port number}:{port number} bazel/golang/cmd/{service}:{service}-go-image
+```
+
 ## Dependencies
 
 ### Golang
@@ -82,6 +89,8 @@ Coming soon...
 | Name | Version | Notes |
 |------|---------|-------|
 | [grpc_gateway](https://github.com/grpc-ecosystem/grpc-gateway) | [2.10.3](https://github.com/grpc-ecosystem/grpc-gateway/releases/tag/v2.10.3) | N/A |
+| [bazel_gazelle](https://github.com/bazelbuild/bazel-gazelle) | [0.26.0](https://github.com/bazelbuild/bazel-gazelle/releases/tag/v0.26.0) | N/A |
+| [io_bazel_rules_go](https://github.com/bazelbuild/rules_go) | [0.35.0](https://github.com/bazelbuild/rules_go/releases/tag/v0.35.0) | N/A |
 | [org_golang_google_grpc](https://google.golang.org/grpc) | [1.48.0](https://github.com/grpc/grpc-go/releases/tag/v1.48.0) | N/A |
 | [org_golang_x_net](https://golang.org/x/net) | [v0.0.0-20220708220712-1185a9018129](https://pkg.go.dev/golang.org/x/net@vv0.0.0-20220708220712-1185a9018129) | N/A |
 | [org_golang_google_protobuf](https://google.golang.org/protobuf) | [1.28.0](https://pkg.go.dev/google.golang.org/protobuf@v1.28.0) | N/A |

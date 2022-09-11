@@ -1,8 +1,5 @@
 # SEE: https://github.com/bazelbuild/rules_go/issues/2603
-# gazelle:repository go_repository name=org_golang_x_sys importpath=golang.org/x/sys
-# gazelle:repository go_repository name=com_github_armon_go_metrics importpath=github.com/circonus-labs/circonus-gometrics
-# gazelle:repository go_repository name=org_golang_google_grpc importpath=google.golang.org/grpc
-# gazelle:repo bazel_gazelle
+# gazelle:repository_macro golang/repositories_go.bzl%go_repository_deps
 
 workspace(name = "com_github_veganafro_mono")
 
@@ -50,7 +47,7 @@ go_deps()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 go_rules_dependencies()
-go_register_toolchains(version = "1.17.7")
+go_register_toolchains(version = "1.18")
 
 load("//golang:repositories_go.bzl", "go_repository_deps")
 go_repository_deps()
@@ -82,7 +79,8 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
 container_pull(
     name = "debian_base",
     # 'tag' is also supported, but digest is encouraged for reproducibility.
-    digest = "sha256:a5635fa9dda1cf81666d8c288130bf3519bdeab1b7ed717db496a73d25d1b35c",
+    # SEE: https://console.cloud.google.com/gcr/images/distroless/GLOBAL/static
+    digest = "sha256:11a4c488b4dbf450bf5e1552e0209c9dce09c99cd5fac8fb7eb0c451c5bc6eed",
     registry = "gcr.io",
     repository = "distroless/static",
 )
@@ -91,7 +89,8 @@ load("@io_bazel_rules_k8s//k8s:k8s.bzl", "k8s_repositories")
 k8s_repositories()
 
 load("@io_bazel_rules_k8s//k8s:k8s_go_deps.bzl", k8s_go_deps = "deps")
-k8s_go_deps()
+# Call k8s_go_deps with an empty string so go_register_toolchains isn't called again
+k8s_go_deps("")
 
 ## End extra ##
 
@@ -100,7 +99,7 @@ k8s_go_deps()
 load("//android:repositories.bzl", "android_deps", "maven_deps")
 android_deps()
 
-load("@build_bazel_rules_android//android:rules.bzl", "android_sdk_repository", "android_ndk_repository")
+load("@build_bazel_rules_android//android:rules.bzl", "android_ndk_repository", "android_sdk_repository")
 
 android_sdk_repository(
     name = "androidsdk",

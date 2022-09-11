@@ -66,10 +66,11 @@ $ deactivate
 
 ## Dependencies
 
-### Python (pip)
+### Python
 
 | Name | Version | Notes |
 |------|---------|-------|
+| [rules_python](https://github.com/bazelbuild/rules_python) | [0.8.1](https://github.com/bazelbuild/rules_python/releases/tag/0.8.1) | N/A |
 | [vectorbt[full]](https://github.com/polakowo/vectorbt) | [0.22.0](https://pypi.org/project/vectorbt/0.22.0/) | N/A |
 
 ## Helpful notes

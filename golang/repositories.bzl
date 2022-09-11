@@ -8,8 +8,8 @@ def go_deps():
     """
     Fetches all required dependencies for proto tests and tools.
     """
-    RULES_GO_SHA = "d6b2513456fe2229811da7eb67a444be7785f5323c6708b38d851d2b51e54d83"
-    RULES_GO_VERSION = "0.30.0"
+    RULES_GO_SHA = "099a9fb96a376ccbbb7d291ed4ecbdfd42f6bc822ab77ae6f1b5cb9e914e94fa"
+    RULES_GO_VERSION = "0.35.0"
 
     http_archive(
         name = "io_bazel_rules_go",
@@ -24,8 +24,8 @@ def go_deps():
         ],
     )
 
-    BAZEL_GAZELLE_SHA = "de69a09dc70417580aabf20a28619bb3ef60d038470c7cf8442fafcf627c21cb"
-    BAZEL_GAZELLE_VERSION = "0.24.0"
+    BAZEL_GAZELLE_SHA = "501deb3d5695ab658e82f6f6f549ba681ea3ca2a5fb7911154b5aa45596183fa"
+    BAZEL_GAZELLE_VERSION = "0.26.0"
 
     http_archive(
         name = "bazel_gazelle",
@@ -40,8 +40,8 @@ def go_deps():
         ],
     )
 
-    GRPC_GATEWAY_V2_SHA = "d7136b4ced1d8b270144953c610635ebc6cdf017863171829ed5bf8c0e8800d7"
-    GRPC_GATEWAY_V2_VERSION = "2.10.0"
+    GRPC_GATEWAY_V2_SHA = "6b180623ed23e545d66b05bd0e32d87623048c5d37dcda4f6aaab21b84170d46"
+    GRPC_GATEWAY_V2_VERSION = "2.11.3"
 
     http_archive(
         name = "com_github_grpc_ecosystem_grpc_gateway_v2",

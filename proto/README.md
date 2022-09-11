@@ -29,6 +29,15 @@ service (i.e. `[SERVICE]/[VERSION]/[SERVICE].proto`).
 
 Coming soon...
 
+## Dependencies
+
+### Proto
+
+| Name | Version | Notes |
+|------|---------|-------|
+| [com_google_protobuf](https://github.com/protocolbuffers/protobuf) | [3.21.5](https://github.com/protocolbuffers/protobuf/releases/tag/v3.21.5) | N/A |
+| [rules_proto](https://github.com/bazelbuild/rules_proto) | [4.0.0-3.20.0](https://github.com/bazelbuild/rules_proto/releases/tag/4.0.0-3.20.0) | N/A |
+
 ## Helpful notes
 
 [Bazel protobuf docs](https://github.com/bazelbuild/rules_proto)
